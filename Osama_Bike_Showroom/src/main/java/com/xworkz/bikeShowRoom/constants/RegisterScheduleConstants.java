@@ -1,6 +1,6 @@
 package com.xworkz.bikeShowRoom.constants;
 
-public enum UserRegisterScheduleConstants {
+public enum RegisterScheduleConstants {
 
     TEST_DRIVE,
     BOOKING;

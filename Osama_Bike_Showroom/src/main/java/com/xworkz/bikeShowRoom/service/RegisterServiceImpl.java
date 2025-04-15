@@ -35,66 +35,67 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public boolean validateAndSaveUser(RegisterDto userRegisterDto, Model model) {
+    public boolean validateAndSaveUser(RegisterDto registerDto, Model model) {
 
         boolean validation = true;
 
-        if (userRegisterDto != null) {
-            RegisterEntity userEntity = new RegisterEntity();
-            userEntity.setCustomerName(userRegisterDto.getCustomerName());
-            userEntity.setAge(userRegisterDto.getAge());
-            userEntity.setContactNo(userRegisterDto.getContactNo());
-            userEntity.setEmail(userRegisterDto.getEmail());
-            userEntity.setAddress(userRegisterDto.getAddress());
-            userEntity.setDrivingLicense(userRegisterDto.getDrivingLicense());
-            userEntity.setSchedule(userRegisterDto.getSchedule());
-            userEntity.setBikeNames(userRegisterDto.getBikeNames());
-            userEntity.setShowroomNames(userRegisterDto.getShowroomNames());
+        if (registerDto != null) {
+            RegisterEntity registerEntity = new RegisterEntity();
+            registerEntity.setCustomerName(registerDto.getCustomerName());
+            registerEntity.setAge(registerDto.getAge());
+            registerEntity.setContactNo(registerDto.getContactNo());
+            registerEntity.setEmail(registerDto.getEmail());
+            registerEntity.setAddress(registerDto.getAddress());
+            registerEntity.setDrivingLicense(registerDto.getDrivingLicense());
+            registerEntity.setSchedule(registerDto.getSchedule());
+            registerEntity.setBikeNames(registerDto.getBikeNames());
+            registerEntity.setShowroomNames(registerDto.getShowroomNames());
+            registerEntity.setScheduleDays(registerDto.getScheduleDays());
 
-            if (userRegisterDto.getCustomerName() != null && userRegisterDto.getCustomerName().length() >= 4 && userRegisterDto.getCustomerName().length() <= 30 && userRegisterDto.getCustomerName().matches("^[A-Za-z.\\s]+$")) {
-                userEntity.setCustomerName(userRegisterDto.getCustomerName());
+            if (registerDto.getCustomerName() != null && registerDto.getCustomerName().length() >= 4 && registerDto.getCustomerName().length() <= 30 && registerDto.getCustomerName().matches("^[A-Za-z.\\s]+$")) {
+                registerEntity.setCustomerName(registerDto.getCustomerName());
             } else {
                 validation = false;
                 model.addAttribute("nameError", "Invalid User Name! give proper User Name It contains only Character, and Minimum 5 character");
             }
 
-            if (userRegisterDto.getAge() != null && userRegisterDto.getAge().matches("^(1[89]|[2-9][0-9])$")) {
-                userEntity.setAge(userRegisterDto.getAge());
+            if (registerDto.getAge() != null && registerDto.getAge().matches("^(1[89]|[2-9][0-9])$")) {
+                registerEntity.setAge(registerDto.getAge());
             } else {
                 validation = false;
                 model.addAttribute("ageError", "Invalid Age! Age must be Above 18");
             }
 
-            if (userRegisterDto.getContactNo() != null && userRegisterDto.getContactNo().length() == 10 && userRegisterDto.getContactNo().matches("^[9876]\\d{9}$")) {
-                userEntity.setContactNo(userRegisterDto.getContactNo());
+            if (registerDto.getContactNo() != null && registerDto.getContactNo().length() == 10 && registerDto.getContactNo().matches("^[9876]\\d{9}$")) {
+                registerEntity.setContactNo(registerDto.getContactNo());
             } else {
                 validation = false;
                 model.addAttribute("contactError", "Invalid Contact! Give Proper Contact & It's Must be 10 Digits");
             }
 
-            if (userRegisterDto.getEmail() != null && userRegisterDto.getEmail().contains("@gmail.com") && userRegisterDto.getEmail().matches("^[a-z0-9.]+@gmail\\.com$")) {
-                userEntity.setEmail(userRegisterDto.getEmail());
+            if (registerDto.getEmail() != null && registerDto.getEmail().contains("@gmail.com") && registerDto.getEmail().matches("^[a-z0-9.]+@gmail\\.com$")) {
+                registerEntity.setEmail(registerDto.getEmail());
             } else {
                 validation = false;
                 model.addAttribute("emailError", "Invalid Email! Give Proper Email");
             }
 
-            if (userRegisterDto.getAddress() != null && userRegisterDto.getAddress().length() >= 6 && userRegisterDto.getAddress().length() <= 100 && userRegisterDto.getAddress().matches("^[A-Za-z0-9,_. ]+$")) {
-                userEntity.setAddress(userRegisterDto.getAddress());
+            if (registerDto.getAddress() != null && registerDto.getAddress().length() >= 6 && registerDto.getAddress().length() <= 100 && registerDto.getAddress().matches("^[A-Za-z0-9,_. ]+$")) {
+                registerEntity.setAddress(registerDto.getAddress());
             } else {
                 validation = false;
                 model.addAttribute("addressError", "Invalid Address! Give proper Address");
             }
 
-            if (userRegisterDto.getDrivingLicense() != null && userRegisterDto.getDrivingLicense().matches("^[A-Z0-9]{15}$")) {
-                userEntity.setDrivingLicense(userRegisterDto.getDrivingLicense());
+            if (registerDto.getDrivingLicense() != null && registerDto.getDrivingLicense().matches("^[A-Z0-9]{15}$")) {
+                registerEntity.setDrivingLicense(registerDto.getDrivingLicense());
             } else {
                 validation = false;
                 model.addAttribute("licenseError", "Invalid Driving License! Once Check your License No");
             }
 
             if (validation) {
-                boolean saved = userRegRepo.save(userEntity);
+                boolean saved = userRegRepo.save(registerEntity);
                 return saved;
             }
         }

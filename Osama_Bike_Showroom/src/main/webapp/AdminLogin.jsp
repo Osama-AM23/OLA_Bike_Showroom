@@ -267,9 +267,9 @@
                 </form>
 
                 <!-- Resend OTP -->
-                <form action="resendOtp" method="post">
+                <form action="resendOtp" id="resendOtpForm" method="post">
                     <input type="hidden" name="email" value="${email}" />
-                    <input type="submit" class="re-send-btn" value="Resend OTP">
+                    <input type="submit" class="re-send-btn" id="resendOtpBtn" value="Resend OTP">
                 </form>
             </div>
 
@@ -334,6 +334,14 @@
                        startTimer(120); // 2 min
                        document.getElementById("adminLoginForm").submit(); // Submit
                    });
+
+                   // RESEND OTP
+                   document.getElementById("resendOtpBtn").addEventListener("click", function () {
+                       localStorage.removeItem("otpEndTime"); // Reset old timer
+                       startTimer(120); // Restart timer for 2 minutes
+                       document.getElementById("resendOtpForm").submit(); // Submit form
+                   });
+
 
                    // Toggle OTP visibility
                    document.getElementById("toggleOtp").addEventListener("click", function () {

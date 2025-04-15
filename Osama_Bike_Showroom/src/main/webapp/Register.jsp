@@ -109,13 +109,14 @@
                 }
 
                 .container {
-                    width: 95%;
-                    max-width: 580px;
+                    width: 90%;
+                    max-width: 880px;
                     background: #f2f7f9;
-                    padding: 25px;
+                    padding: 1px;
                     border-radius: 10px;
                     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                    margin-bottom: 40px;
+                    margin-bottom: 35px;
+                    box-sizing: border-box;
                 }
 
                 .container h3 {
@@ -126,11 +127,11 @@
                 .container select {
                     width: 100%;
                     padding: 10px 5px;
-                    margin: 10px 0;
+                    margin: 6px 0;
                     border: none;
                     border-bottom: 2px solid #ccc;
                     border-radius: 0;
-                    font-size: 15px;
+                    font-size: 13px;
                     background: transparent;
                     color: var(--text-color);
                     transition: border-color 0.3s;
@@ -140,7 +141,7 @@
                 }
 
                 .container input[type="text"]::placeholder {
-                    font-size: 13px;
+                    font-size: 12px;
                     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
                     color: var(--main-color);
                 }
@@ -304,6 +305,13 @@
                         <option value="" disabled selected>Select Schedule</option>
                         <c:forEach items="${schedule}" var="schedule">
                             <option value="${schedule.name()}">${schedule.name()}</option>
+                        </c:forEach>
+                    </select>
+
+                    <select name="scheduleDays" id="scheduleDays">
+                        <option value="" disabled selected>Select Scheduled Day</option>
+                        <c:forEach items="${scheduleDays}" var="scheduleDays">
+                        <option value="${scheduleDays.name()}">${scheduleDays.name()}</option>
                         </c:forEach>
                     </select>
                     <input type="submit" id="submitBtn" value="Submit"

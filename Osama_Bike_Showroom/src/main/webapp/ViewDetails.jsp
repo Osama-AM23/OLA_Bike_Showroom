@@ -216,6 +216,7 @@
                         <th>SL.NO</th>
                         <th>CUSTOMER NAME</th>
                         <th>REASON</th>
+                        <th>RE-SCHEDULED</th>
                         <th>UPDATED TIME</th>
                     </tr>
                 </thead>
@@ -225,6 +226,7 @@
                             <td>${status.index +1}</td>
                             <td>${data.customerName}</td>
                             <td>${data.reason}</td>
+                            <td>${data.reScheduledDay}</td>
                             <td>${data.updatedTiming}</td>
                         </tr>
                     </c:forEach>

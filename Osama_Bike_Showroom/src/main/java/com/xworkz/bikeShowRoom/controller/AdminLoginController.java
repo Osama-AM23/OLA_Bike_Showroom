@@ -98,7 +98,7 @@ public class AdminLoginController {
         otpTimestamps.put(email, System.currentTimeMillis());
 
         boolean emailSent = adminLoginService.sendEmail(email, newOtp);
-
+        log.info(newOtp);
         if (emailSent) {
             model.addAttribute("email", email);
             return "AdminLogin";

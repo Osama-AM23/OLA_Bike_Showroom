@@ -170,7 +170,7 @@
 
 
                 table {
-                    width: 15%;
+                    width: 22%;
                     margin: 50px auto;
                     border-collapse: collapse;
                     background-color: var(--table-bg);
@@ -187,7 +187,7 @@
 
                 th,
                 td {
-                    padding: 12px 9px;
+                    padding: 7px 6px;
                     text-align: center;
                     border-bottom: 1px solid #ddd;
                     font-size: 10px;
@@ -195,7 +195,7 @@
 
                 tbody tr:hover {
                     background-color: var(--table-hover);
-                    transform: scale(1.01);
+                    transform: scale(1.0);
                     transition: all 0.2s ease-in-out;
                 }
 
@@ -245,7 +245,36 @@
                     color: rgb(89, 135, 141);
                 }
 
+                select#scheduleDays {
+                    width: 100%;
+                    padding: 7px 5px;
+                    border: 1px solid #ccc;
+                    border-radius: 6px;
+                    background-color: #fff;
+                    font-size: 13px;
+                    color: #333;
+                    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+                }
 
+                select#scheduleDays:focus {
+                    border-color: #007bff;
+                    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+                    outline: none;
+                }
+
+                select#scheduleDays option {
+                    padding: 8px;
+                }
+
+                select#scheduleDays:hover {
+                    border-color: #888;
+                }
+
+                select#scheduleDays:disabled {
+                    background-color: #eee;
+                    color: #999;
+                    cursor: not-allowed;
+                }
 
                 @media screen and (max-width: 768px) {
                     table {
@@ -315,6 +344,7 @@
                         <th>SHOWROOM NAME</th>
                         <th>BIKE</th>
                         <th>SCHEDULE</th>
+                        <th>SCHEDULED DAY</th>
                         <th>DESCRIPTION</th>
                         <th>UPDATE</th>
                         <th>VIEW UPDATES</th>
@@ -333,8 +363,19 @@
                             <td>${dts.showroomNames}</td>
                             <td>${dts.bikeNames}</td>
                             <td>${dts.schedule}</td>
+
                             <td>
-                                <form action="updateReason" method="post">
+                            <form action="updateReason" method="post">
+                                <select name="scheduleDays" id="scheduleDays">
+                                    <option value="" disabled selected>Select Scheduled Day</option>
+                                    <c:forEach items="${scheduleDays}" var="scheduleDays">
+                                    <option value="${scheduleDays}">${scheduleDays.name()}</option>
+                                    </c:forEach>
+                                </select>
+                            </td>
+
+                            <td>
+
                                     <input type="hidden" name="customerName" value="${dts.customerName}" />
                                     <textarea class="form-control description-input" name="reason"
                                         oninput="checkReason(this)" required>${dts.reason}</textarea>

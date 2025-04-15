@@ -34,9 +34,10 @@ public class FollowUpServiceImpl implements FollowUpService {
     }
 
     @Override
-    public RegisterEntity updateReson(String customerName, String reason) {
+    public RegisterEntity updateReson(String customerName, String reason, String scheduleDays) {
         registerEntity.setCustomerName(customerName);
         registerEntity.setReason(reason);
+        registerEntity.setScheduleDays(scheduleDays);
 
         boolean isUpdated = followUpRepo.updateReasonByName(registerEntity);
         if (isUpdated) {

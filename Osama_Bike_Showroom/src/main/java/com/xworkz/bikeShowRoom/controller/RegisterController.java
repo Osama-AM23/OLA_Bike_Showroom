@@ -1,6 +1,7 @@
 package com.xworkz.bikeShowRoom.controller;
 
-import com.xworkz.bikeShowRoom.constants.UserRegisterScheduleConstants;
+import com.xworkz.bikeShowRoom.constants.RegisterScheduleConstants;
+import com.xworkz.bikeShowRoom.constants.RegisterScheduleDayConstants;
 import com.xworkz.bikeShowRoom.dto.RegisterDto;
 import com.xworkz.bikeShowRoom.dto.ShowRoomInfoDto;
 import com.xworkz.bikeShowRoom.service.RegisterService;
@@ -22,8 +23,12 @@ public class RegisterController {
 
     @GetMapping("/register")
     public String getRegisterPage(Model model) {
-        List<UserRegisterScheduleConstants> schedule = new ArrayList<>(Arrays.asList(UserRegisterScheduleConstants.values()));
+        List<RegisterScheduleConstants> schedule = new ArrayList<>(Arrays.asList(RegisterScheduleConstants.values()));
         model.addAttribute("schedule", schedule);
+
+        List<RegisterScheduleDayConstants> scheduleDay = new ArrayList<>(Arrays.asList(RegisterScheduleDayConstants.values()));
+        model.addAttribute("scheduleDays", scheduleDay);
+
         List<ShowRoomInfoDto> showrooms = userRegisterService.getAllShowroom();
         model.addAttribute("showrooms", showrooms);
         return "Register";
@@ -35,8 +40,12 @@ public class RegisterController {
         if (saved) {
             return "RegisterSuccess";
         }
-        List<UserRegisterScheduleConstants> schedule = new ArrayList<>(Arrays.asList(UserRegisterScheduleConstants.values()));
+        List<RegisterScheduleConstants> schedule = new ArrayList<>(Arrays.asList(RegisterScheduleConstants.values()));
         model.addAttribute("schedule", schedule);
+
+        List<RegisterScheduleDayConstants> scheduleDay = new ArrayList<>(Arrays.asList(RegisterScheduleDayConstants.values()));
+        model.addAttribute("scheduleDays", scheduleDay);
+
         List<ShowRoomInfoDto> showrooms = userRegisterService.getAllShowroom();
         model.addAttribute("showrooms", showrooms);
         model.addAttribute("user", userRegisterDto);

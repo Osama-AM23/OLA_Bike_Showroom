@@ -11,7 +11,7 @@ public interface FollowUpService {
 
     List<RegisterDto> getAllDetails();
 
-    public RegisterEntity updateReson(String customerName, String reason);
+    public RegisterEntity updateReson(String customerName, String reason, String scheduleDays);
 
     public List<ViewRegisterEntity> getAllByName(String customerName);
 }

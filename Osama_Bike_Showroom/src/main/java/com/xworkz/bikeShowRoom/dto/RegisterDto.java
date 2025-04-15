@@ -25,5 +25,7 @@ public class RegisterDto {
 
     private String schedule;
 
+    private String scheduleDays;
+
     private String reason;
 }

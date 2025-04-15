@@ -1,5 +1,6 @@
 package com.xworkz.bikeShowRoom.controller;
 
+import com.xworkz.bikeShowRoom.constants.RegisterScheduleDayConstants;
 import com.xworkz.bikeShowRoom.dto.RegisterDto;
 import com.xworkz.bikeShowRoom.entity.RegisterEntity;
 import com.xworkz.bikeShowRoom.entity.ViewRegisterEntity;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -26,19 +29,29 @@ public class FollowUpController {
     public String getFollowUp(Model model) {
         List<RegisterDto> dtoList = followUpServ.getAllDetails();
         model.addAttribute("details", dtoList);
+
+        List<RegisterScheduleDayConstants> scheduleDay = new ArrayList<>(Arrays.asList(RegisterScheduleDayConstants.values()));
+        model.addAttribute("scheduleDays", scheduleDay);
+
         return "FollowUp";
     }
 
     @PostMapping("/updateReason")
-    public String onUpdateReason(@RequestParam("customerName") String customerName, @RequestParam("reason") String reason, Model model) {
+    public String onUpdateReason(@RequestParam("customerName") String customerName, @RequestParam("reason") String reason, @RequestParam("scheduleDays") String scheduleDays, Model model) {
 
-        RegisterEntity updateReason = followUpServ.updateReson(customerName, reason);
+        RegisterEntity updateReason = followUpServ.updateReson(customerName, reason, scheduleDays);
         if (updateReason != null) {
-            return "FollowUpSuccess";
+            List<RegisterDto> dtoList = followUpServ.getAllDetails();
+            model.addAttribute("details", dtoList);
+
+            List<RegisterScheduleDayConstants> scheduleDay = new ArrayList<>(Arrays.asList(RegisterScheduleDayConstants.values()));
+            model.addAttribute("scheduleDays", scheduleDay);
+
+            return "FollowUp";
         }
         List<RegisterDto> dtoList = followUpServ.getAllDetails();
         model.addAttribute("details", dtoList);
-        return "FollowUp";
+        return "AdminSuccess";
     }
 
     @GetMapping("/viewDetails")

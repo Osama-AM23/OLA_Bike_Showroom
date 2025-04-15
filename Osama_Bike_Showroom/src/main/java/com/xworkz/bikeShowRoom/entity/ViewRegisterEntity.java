@@ -22,6 +22,8 @@ public class ViewRegisterEntity {
 
     private String reason;
 
+    private String reScheduledDay;
+
     private String updatedTiming;
 
 }
