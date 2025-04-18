@@ -68,6 +68,7 @@ public class AddBikeDetailsController {
 
         boolean saved = addBikeDetailsService.validateAndSave(addBikeDetailsDto, model);
         if (saved) {
+            model.addAttribute("img", addBikeDetailsDto.getImgPaths());
             return "AddBikeDetailsSuccess";
         }
         return "AddBikeDetails";

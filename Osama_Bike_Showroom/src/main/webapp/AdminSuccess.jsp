@@ -111,11 +111,12 @@
 
     .card-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(3, 1fr); /* show only 3 cards per row */
       gap: 20px;
       flex: 1;
       padding-right: 20px;
     }
+
 
     .card {
       background: #f8fafa;
@@ -233,15 +234,22 @@
       <div class="card">
         <div class="card-title">Add Bike Details</div>
         <a href="addBikeDetails" class="btn-link">
-          <i class="bi bi-plus-circle-fill"></i> Add Bike Details
+          <i class="bi bi-plus-circle-fill"></i> Add Bike
         </a>
       </div>
 
       <div class="card">
         <div class="card-title">Bikes Information</div>
         <a href="bikesInformation" class="btn-link">
-          <i class="bi bi-bicycle"></i>  Bikes Information
+          <i class="bi bi-bicycle"></i>  Bikes Info
         </a>
+      </div>
+
+      <div class="card">
+          <div class="card-title">Showroom Information</div>
+          <a href="getShowroom" class="btn-link">
+            <i class="bi bi-house-fill"></i> Showroom Info
+          </a>
       </div>
 
       <div class="card">
@@ -264,7 +272,6 @@
           <i class="bi bi-box-arrow-in-right"></i> Assign Bike
         </a>
       </div>
-
       <!-- Add more cards as needed -->
     </div>
 

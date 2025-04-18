@@ -336,15 +336,14 @@
                     <tr>
                         <th>SL.NO</th>
                         <th>CUSTOMER NAME</th>
-                        <th>AGE</th>
-                        <th>EMAIL</th>
                         <th>CONTACT</th>
                         <th>ADDRESS</th>
                         <th>DRIVING LICENSE</th>
                         <th>SHOWROOM NAME</th>
                         <th>BIKE</th>
                         <th>SCHEDULE</th>
-                        <th>SCHEDULED DAY</th>
+                        <th>RE-SCHEDULE Date</th>
+                        <th>RE-SCHEDULE TIME</th>
                         <th>DESCRIPTION</th>
                         <th>UPDATE</th>
                         <th>VIEW UPDATES</th>
@@ -355,8 +354,6 @@
                         <tr>
                             <td>${status.index +1}</td>
                             <td>${dts.customerName}</td>
-                            <td>${dts.age}</td>
-                            <td>${dts.email}</td>
                             <td>${dts.contactNo}</td>
                             <td>${dts.address}</td>
                             <td>${dts.drivingLicense}</td>
@@ -366,14 +363,16 @@
 
                             <td>
                             <form action="updateReason" method="post">
-                                <select name="scheduleDays" id="scheduleDays">
-                                    <option value="" disabled selected>Select Scheduled Day</option>
-                                    <c:forEach items="${scheduleDays}" var="scheduleDays">
-                                    <option value="${scheduleDays}">${scheduleDays.name()}</option>
-                                    </c:forEach>
+                                <input type="date" id="scheduledDate" name="scheduleDate" placeholder="Select Date" required />
+                            </td>
+                            <td>
+                                <select id="scheduleTime" name="scheduleTime" required>
+                                        <option value="" disabled selected>Select Time</option>
+                                        <option value="10AM-11AM">10AM - 11AM</option>
+                                        <option value="01PM-2PM">01PM - 02PM</option>
+                                        <option value="4PM-5PM">4PM - 5PM</option>
                                 </select>
                             </td>
-
                             <td>
 
                                     <input type="hidden" name="customerName" value="${dts.customerName}" />
@@ -381,7 +380,8 @@
                                         oninput="checkReason(this)" required>${dts.reason}</textarea>
                                     <small class="description-reason"></small>
                             </td>
-                            <td><input type="submit" value="UPDATE"></form>
+                            <td><input type="submit" value="UPDATE">
+                            </form>
                             </td>
                             <td>
                                 <a href="viewDetails?customerName=${dts.customerName}" class="view-button">VIEW

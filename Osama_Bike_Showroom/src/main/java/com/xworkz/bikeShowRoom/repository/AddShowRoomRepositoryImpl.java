@@ -4,10 +4,9 @@ import com.xworkz.bikeShowRoom.entity.AddShowRoomEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
+import javax.persistence.*;
+import java.util.Collections;
+import java.util.List;
 
 @Repository
 public class AddShowRoomRepositoryImpl implements AddShowRoomRepository {
@@ -75,5 +74,14 @@ public class AddShowRoomRepositoryImpl implements AddShowRoomRepository {
             eMang.close();
         }
         return count;
+    }
+
+    @Override
+    public List<AddShowRoomEntity> getAllShowroom() {
+
+        EntityManager eManag = emFac.createEntityManager();
+        Query query = eManag.createNamedQuery("getShowrooms");
+        List<AddShowRoomEntity> showRoomEntities = query.getResultList();
+        return showRoomEntities;
     }
 }

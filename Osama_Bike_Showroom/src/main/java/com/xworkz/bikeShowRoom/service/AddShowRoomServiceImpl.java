@@ -1,5 +1,6 @@
 package com.xworkz.bikeShowRoom.service;
 
+import com.xworkz.bikeShowRoom.dto.AddBikeDetailsDto;
 import com.xworkz.bikeShowRoom.dto.AddShowRoomDto;
 import com.xworkz.bikeShowRoom.entity.AddShowRoomEntity;
 import com.xworkz.bikeShowRoom.repository.AddShowRoomRepository;
@@ -7,6 +8,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class AddShowRoomServiceImpl implements AddShowRoomService {
@@ -47,7 +53,8 @@ public class AddShowRoomServiceImpl implements AddShowRoomService {
                 model.addAttribute("contactError", "Invalid Contact Number");
             }
             if (isValidate) {
-                boolean saved= addShowRoomRepository.save(addShowRoomEntity);
+                addShowRoomEntity.setImgPath(addShowRoomDto.getImgPath());
+                boolean saved = addShowRoomRepository.save(addShowRoomEntity);
                 return saved;
             }
         }
@@ -62,5 +69,20 @@ public class AddShowRoomServiceImpl implements AddShowRoomService {
     @Override
     public long getCountByContact(String contact) {
         return addShowRoomRepository.getCountOfContact(contact);
+    }
+
+    @Override
+    public List<AddShowRoomDto> getAllShowroom() {
+        List<AddShowRoomDto> showRoomDtos = new ArrayList<>();
+        List<AddShowRoomEntity> showRoomEntities = addShowRoomRepository.getAllShowroom();
+
+        for (AddShowRoomEntity addShowRoomEntity : showRoomEntities) {
+            AddShowRoomDto dto = new AddShowRoomDto();
+            BeanUtils.copyProperties(addShowRoomEntity, dto);
+            dto.setImgPath(addShowRoomEntity.getImgPath());
+            showRoomDtos.add(dto);
+        }
+
+        return showRoomDtos;
     }
 }

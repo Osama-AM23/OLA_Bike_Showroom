@@ -25,6 +25,9 @@ import javax.persistence.*;
 
 @NamedQuery(name = "getBikesByShowroom",
         query = "Select se.assignedBikes From AddShowRoomEntity se Where se.showroomName = :showroomName")
+
+@NamedQuery(name = "getShowrooms",
+        query = "Select se from AddShowRoomEntity se")
 public class AddShowRoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +40,8 @@ public class AddShowRoomEntity {
     private String city;
 
     private String contact;
+
+    private String imgPath;
 
     private String assignedBikes;
 }

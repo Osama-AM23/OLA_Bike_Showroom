@@ -38,7 +38,8 @@ public class FollowUpRepositoryImpl implements FollowUpRepository {
             Query query = eManag.createNamedQuery("updateReasonByName");
             query.setParameter("reason", registerEntity.getReason());
             query.setParameter("customerName", registerEntity.getCustomerName());
-            query.setParameter("scheduleDays", registerEntity.getScheduleDays());
+            query.setParameter("scheduleDate", registerEntity.getScheduleDate());
+            query.setParameter("scheduleTime", registerEntity.getScheduleTime());
             int updateRows = query.executeUpdate();
 
             ViewRegisterEntity viewRegEnt = new ViewRegisterEntity();
@@ -46,7 +47,8 @@ public class FollowUpRepositoryImpl implements FollowUpRepository {
             viewRegEnt.setId(viewRegDto.getId());
             viewRegEnt.setCustomerName(registerEntity.getCustomerName());
             viewRegEnt.setReason(registerEntity.getReason());
-            viewRegEnt.setReScheduledDay(registerEntity.getScheduleDays());
+            viewRegEnt.setReScheduledDate(registerEntity.getScheduleDate());
+            viewRegEnt.setReScheduledTime(registerEntity.getScheduleTime());
             viewRegEnt.setUpdatedTiming(LocalDateTime.now().toString());
 
             eManag.merge(viewRegEnt);

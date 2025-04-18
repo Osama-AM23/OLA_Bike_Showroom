@@ -9,7 +9,9 @@ public class ViewRegisterDto {
 
     private String customerName;
 
-    private String reScheduledDay;
+    private String reScheduledDate;
+
+    private String reScheduledTime;
 
     private String reason;
 }

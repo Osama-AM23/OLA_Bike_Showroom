@@ -205,6 +205,39 @@
                     width: 100%;
                 }
 
+                .inline-fields {
+                    display: flex;
+                    gap: 15px;
+                    margin-top: 10px;
+                }
+
+
+                .inline-fields > div {
+                    flex: 1;
+                }
+
+
+                #scheduledDate,
+                #scheduleTime {
+                    padding: 10px 10px;
+                    width: 100%;
+                    border: 1px solid #5c899d;
+                    border-radius: 6px;
+                    background-color: #ffffff;
+                    color: #2e4a56;
+                    font-size: 13px;
+                    outline: none;
+                    transition: border-color 0.3s, box-shadow 0.3s;
+                }
+
+                /* Focus state for both fields */
+                #scheduledDate:focus,
+                #scheduleTime:focus {
+                    border-color: #2e4a56;
+                    box-shadow: 0 0 6px rgba(92, 137, 157, 0.4);
+                }
+
+
                 @media (max-width: 600px) {
                     .inline-fields {
                         flex-direction: column;
@@ -308,12 +341,36 @@
                         </c:forEach>
                     </select>
 
-                    <select name="scheduleDays" id="scheduleDays">
-                        <option value="" disabled selected>Select Scheduled Day</option>
-                        <c:forEach items="${scheduleDays}" var="scheduleDays">
-                        <option value="${scheduleDays.name()}">${scheduleDays.name()}</option>
-                        </c:forEach>
-                    </select>
+                   <!-- Schedule Dropdown -->
+                   <select name="scheduleDays" id="scheduleDays">
+                       <option value="" disabled selected>Select Scheduled Day</option>
+                       <c:forEach items="${scheduleDays}" var="scheduleDay">
+                           <option value="${scheduleDay.name()}">${scheduleDay.name()}</option>
+                       </c:forEach>
+                   </select>
+
+                   <div id="scheduleDetails" style="display: none; margin-top: 10px;">
+                       <!-- Inline Fields for Date and Time -->
+                       <div class="inline-fields">
+                           <!-- Date Field -->
+                           <div>
+                               <input type="date" id="scheduledDate" name="scheduledDate" placeholder="Select Date" required />
+                           </div>
+
+                           <!-- Time Field -->
+                           <div>
+                               <select id="scheduleTime" name="scheduleTime" required>
+                                   <option value="" disabled selected>Select Time</option>
+                                   <option value="10AM-11AM">10AM - 11AM</option>
+                                   <option value="01PM-2PM">01PM - 02PM</option>
+                                   <option value="4PM-5PM">4PM - 5PM</option>
+                               </select>
+                           </div>
+                       </div>
+                   </div>
+
+
+
                     <input type="submit" id="submitBtn" value="Submit"
                         style="padding: 8px 16px; border: 2px solid transparent; background-color: #5c899d; color: white; cursor: pointer;">
                 </form>
@@ -325,6 +382,32 @@
                     menu.classList.toggle('show-menu');
                 }
             </script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const scheduleDays = document.getElementById('scheduleDays');
+                    const scheduleDetails = document.getElementById('scheduleDetails');
+                    const scheduledDate = document.getElementById('scheduledDate');
+
+                    scheduleDays.addEventListener('change', function () {
+                        const selectedValue = this.value;
+
+                        if (selectedValue === 'SCHEDULE_TODAY') {
+                            const today = new Date().toISOString().split('T')[0];
+                            scheduledDate.value = today;
+                            scheduledDate.readOnly = true;
+                            scheduleDetails.style.display = 'block';
+                        } else if (selectedValue === 'SCHEDULE_LATER') {
+                            scheduledDate.value = '';
+                            scheduledDate.readOnly = false;
+                            scheduleDetails.style.display = 'block';
+                        } else {
+                            scheduleDetails.style.display = 'none';
+                        }
+                    });
+                });
+            </script>
+
 
             <script>
                 $(document).ready(function () {
@@ -582,7 +665,6 @@
                     }
                 }
             </script>
-
 
         </body>
 

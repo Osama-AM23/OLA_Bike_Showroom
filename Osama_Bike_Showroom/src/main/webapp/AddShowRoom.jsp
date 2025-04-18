@@ -8,7 +8,8 @@
             <title>Add Showroom</title>
             <link rel="icon" href="https://cdn.olaelectric.com/ev-discovery-platform/New-Homepage/ola_black_logo.svg"
                 type="image/png" />
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+            <link rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
             <style>
                 :root {
@@ -43,7 +44,7 @@
                 }
 
                 header img {
-                    height: 35px;
+                    height: 25px;
                     width: auto;
                 }
 
@@ -104,7 +105,7 @@
                 .container {
                     background: var(--main-color);
                     padding: 20px;
-                    border-radius: 10px;
+                    border-radius: 16px;
                     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
                     text-align: center;
                     width: 350px;
@@ -121,24 +122,32 @@
 
                 .container input,
                 .container select {
-                    width: 100%;
-                    padding: 12px;
-                    margin: 10px 0;
-                    border: 1px solid #ccc;
-                    border-radius: 5px;
-                    background: white;
+                    background: transparent;
+                    border: none;
+                    border-bottom: 2px solid var(--text-color);
+                    border-radius: 0;
                     color: var(--text-color);
                     font-size: 16px;
-                    outline: none;
+                    padding: 10px 5px;
+                    margin: 15px 0;
+                    width: 100%;
                     box-sizing: border-box;
-                    display: block;
+                    transition: border-color 0.3s ease-in-out;
                 }
 
                 .container input:focus,
                 .container select:focus {
-                    border-color: var(--main-color);
-                    background: var(--bg-color);
+                    outline: none;
+                    border-bottom: 2px solid var(--bg-color);
+                    background-color: transparent;
                 }
+
+                .container input:focus,
+                .container select:focus {
+                    border-bottom: 2px solid #2e4a56;
+                    box-shadow: 0 2px 4px rgba(46, 74, 86, 0.2);
+                }
+
 
                 .container input[type="submit"] {
                     background: var(--bg-color);
@@ -173,21 +182,22 @@
             <header>
                 <img src="https://cdn.olaelectric.com/ev-discovery-platform/New-Homepage/ola_black_logo.svg"
                     alt="OLA Electric">
+                    <i class="bi bi-list menu-icon" onclick="toggleMenu()"></i>
             </header>
 
             <nav class="nav-menu" id="navMenu">
                 <span class="close-btn" onclick="toggleMenu()">&times;</span>
-                    <a href="addShowRoom"><i class="bi bi-plus-circle-fill"></i> Add Showroom</a>
-                    <a href="addBikeDetails"><i class="bi bi-plus-circle-fill"></i> Add Bike Details</a>
-                    <a href="bikesInformation"><i class="bi bi-bicycle"></i>Bikes Information</a>
-                    <a href="getDetails"><i class="bi bi-box-arrow-in-right"></i> Assign Bike to Showroom</a>
-                    <a href="register"><i class="bi bi-person-plus-fill"></i> Registration</a>
-                    <a href="followUp"><i class="bi bi-person-lines-fill"></i>Follow Up</a>
-                    <a href="AdminSuccess.jsp"><i class="bi bi-house-door-fill"></i> Home Page</a>
+                <a href="addShowRoom"><i class="bi bi-plus-circle-fill"></i> Add Showroom</a>
+                <a href="addBikeDetails"><i class="bi bi-plus-circle-fill"></i> Add Bike Details</a>
+                <a href="bikesInformation"><i class="bi bi-bicycle"></i>Bikes Information</a>
+                <a href="getDetails"><i class="bi bi-box-arrow-in-right"></i> Assign Bike to Showroom</a>
+                <a href="register"><i class="bi bi-person-plus-fill"></i> Registration</a>
+                <a href="followUp"><i class="bi bi-person-lines-fill"></i>Follow Up</a>
+                <a href="AdminSuccess.jsp"><i class="bi bi-house-door-fill"></i> Home Page</a>
             </nav>
 
             <div class="container">
-                <form action="${pageContext.request.contextPath}/addShowRoom" method="post">
+                <form action="${pageContext.request.contextPath}/addShowRoom" enctype="multipart/form-data" method="post">
                     <h3>ADD SHOWROOM BRANCH</h3>
                     <input type="text" id="showroomName" name="showroomName" placeholder="Enter Showroom Name"
                         onchange="onShowroom()" />
@@ -203,6 +213,8 @@
                     <input type="text" onchange="onContact()" id="contact" name="contact"
                         placeholder="Enter Showroom Contact" />
                     <span id="contactError" class="error-msg"></span>
+
+                    <input type="file" name="file" id="imgProperty" accept=".jpg, .jpeg, .png">
 
                     <input type="submit" id="submitButton" value="Register Showroom">
                 </form>

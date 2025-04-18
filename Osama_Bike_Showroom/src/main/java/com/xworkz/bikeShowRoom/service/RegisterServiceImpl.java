@@ -51,6 +51,8 @@ public class RegisterServiceImpl implements RegisterService {
             registerEntity.setBikeNames(registerDto.getBikeNames());
             registerEntity.setShowroomNames(registerDto.getShowroomNames());
             registerEntity.setScheduleDays(registerDto.getScheduleDays());
+            registerEntity.setScheduleDate(registerDto.getScheduleDate());
+            registerEntity.setScheduleTime(registerDto.getScheduleTime());
 
             if (registerDto.getCustomerName() != null && registerDto.getCustomerName().length() >= 4 && registerDto.getCustomerName().length() <= 30 && registerDto.getCustomerName().matches("^[A-Za-z.\\s]+$")) {
                 registerEntity.setCustomerName(registerDto.getCustomerName());

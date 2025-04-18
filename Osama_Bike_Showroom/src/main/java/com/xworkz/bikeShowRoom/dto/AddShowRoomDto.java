@@ -15,5 +15,7 @@ public class AddShowRoomDto {
 
     private String contact;
 
+    private String imgPath;
+
     private String assignedBikes;
 }

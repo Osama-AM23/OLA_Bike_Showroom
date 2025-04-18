@@ -37,9 +37,9 @@ public class FollowUpController {
     }
 
     @PostMapping("/updateReason")
-    public String onUpdateReason(@RequestParam("customerName") String customerName, @RequestParam("reason") String reason, @RequestParam("scheduleDays") String scheduleDays, Model model) {
+    public String onUpdateReason(@RequestParam("customerName") String customerName, @RequestParam("reason") String reason, @RequestParam("scheduleDate") String scheduleDate, @RequestParam("scheduleTime") String scheduleTime, Model model) {
 
-        RegisterEntity updateReason = followUpServ.updateReson(customerName, reason, scheduleDays);
+        RegisterEntity updateReason = followUpServ.updateReson(customerName, reason, scheduleDate, scheduleTime);
         if (updateReason != null) {
             List<RegisterDto> dtoList = followUpServ.getAllDetails();
             model.addAttribute("details", dtoList);

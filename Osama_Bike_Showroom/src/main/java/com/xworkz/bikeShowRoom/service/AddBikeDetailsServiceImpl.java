@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
@@ -17,7 +18,7 @@ public class AddBikeDetailsServiceImpl implements AddBikeDetailsService {
     AddBikeDetailsEntity bikeDetailsEntity = new AddBikeDetailsEntity();
 
     @Override
-    public boolean validateAndSave(AddBikeDetailsDto addBikeDetailsDto, Model model) {
+    public boolean validateAndSave(AddBikeDetailsDto addBikeDetailsDto,Model model) {
         boolean isValid = true;
         if (addBikeDetailsDto != null) {
 
