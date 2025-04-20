@@ -179,7 +179,7 @@
        <div class="card-grid">
            <c:forEach items="${display}" var="display">
                <div class="card">
-               <img src="${pageContext.request.contextPath}/display?imgPath=${display.imgPath}" alt="profile-image">
+                <img src="${pageContext.request.contextPath}/display?imgPath=${display.imgPath}" />
                    <h4>SHOWROOM : ${display.showroomName}</h4>
                    <h4>ADDRESS : ${display.address}</h4>
                    <h4>CITY : ${display.city}</h4>

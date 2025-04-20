@@ -54,16 +54,17 @@ public class AddShowRoomController {
     }
 
     @GetMapping("/getShowroom")
-    public String getBikeInfo(Model model) {
+    public String getBikeInfo(Model model, AddShowRoomDto addShowRoomDto) {
         List<AddShowRoomDto> lists = addShowRoomService.getAllShowroom();
         model.addAttribute("display", lists);
+        model.addAttribute("img", addShowRoomDto.getImgPath());
         return "ShowroomInformation";
     }
 
     @GetMapping("/display")
     public void getImage(@RequestParam String imgPath, HttpServletResponse servletResponse) throws IOException {
         servletResponse.setContentType("image/jpg");
-        File file = new File("M:\\showroom\\" + imgPath);
+        File file = new File("M:\\showroom\\showroomImages" + imgPath);
         if (file.exists()) {
             try (InputStream input = new BufferedInputStream(new FileInputStream(file));
                  ServletOutputStream outputStream = servletResponse.getOutputStream()) {

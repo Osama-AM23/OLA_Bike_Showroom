@@ -187,7 +187,7 @@
 
                 th,
                 td {
-                    padding: 7px 6px;
+                    padding: 7px 8px;
                     text-align: center;
                     border-bottom: 1px solid #ddd;
                     font-size: 10px;
@@ -245,36 +245,105 @@
                     color: rgb(89, 135, 141);
                 }
 
-                select#scheduleDays {
+                input[type="date"] {
+                    width: 100%;
+                    padding: 4px 10px;
+                    border: 1px solid var(--main-color);
+                    border-radius: 4px;
+                    background-color: var(--table-hover);
+                    color: var(--text-color);
+                    font-size: 12px;
+                    font-family: inherit;
+                    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+                }
+
+                input[type="date"]:focus {
+                    border-color: var(--main-color);
+                    box-shadow: 0 0 0 3px rgba(92, 137, 157, 0.3);
+                    outline: none;
+                }
+
+                input[type="date"]:hover {
+                    border-color: #4a7384;
+                }
+
+                input[type="date"]:disabled {
+                    background-color: #eee;
+                    color: #999;
+                    cursor: not-allowed;
+                }
+
+
+                select#scheduleTime {
                     width: 100%;
                     padding: 7px 5px;
-                    border: 1px solid #ccc;
+                    border: 1px solid var(--main-color);
                     border-radius: 6px;
-                    background-color: #fff;
+                    background-color: var(--table-hover);
                     font-size: 13px;
                     color: #333;
                     transition: border-color 0.3s ease, box-shadow 0.3s ease;
                 }
 
-                select#scheduleDays:focus {
-                    border-color: #007bff;
+                select#scheduleTime:focus {
+                    border-color: var(--table-bg);
                     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
                     outline: none;
                 }
 
-                select#scheduleDays option {
+                select#scheduleTime option {
                     padding: 8px;
                 }
 
-                select#scheduleDays:hover {
+                select#scheduleTime:hover {
                     border-color: #888;
                 }
 
-                select#scheduleDays:disabled {
+                select#scheduleTime:disabled {
                     background-color: #eee;
                     color: #999;
                     cursor: not-allowed;
                 }
+
+                textarea.description-input {
+                    width: 90%;
+                    min-height: 60px;
+                    padding: 10px 10px;
+                    border: 1px solid var(--main-color);
+                    border-radius: 6px;
+                    background-color: var(--bg-color);
+                    color: var(--text-color);
+                    font-size: 11px;
+                    font-family: inherit;
+                    resize: vertical;
+                    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+                }
+
+                textarea.description-input:focus {
+                    border-color: var(--main-color);
+                    box-shadow: 0 0 0 3px rgba(92, 137, 157, 0.3);
+                    outline: none;
+                }
+
+                textarea.description-input:hover {
+                    border-color: #4a7384;
+                }
+
+                textarea.description-input:disabled {
+                    background-color: #eee;
+                    color: #999;
+                    cursor: not-allowed;
+                }
+
+                .description-reason {
+                    display: block;
+                    margin-top: 4px;
+                    font-size: 11px;
+                    color: #777;
+                    font-style: italic;
+                }
+
+
 
                 @media screen and (max-width: 768px) {
                     table {
@@ -362,26 +431,27 @@
                             <td>${dts.schedule}</td>
 
                             <td>
-                            <form action="updateReason" method="post">
-                                <input type="date" id="scheduledDate" name="scheduleDate" placeholder="Select Date" required />
+                                <form action="updateReason" method="post">
+                                    <input type="date" id="scheduledDate" name="scheduleDate" placeholder="Select Date"
+                                        required />
                             </td>
                             <td>
                                 <select id="scheduleTime" name="scheduleTime" required>
-                                        <option value="" disabled selected>Select Time</option>
-                                        <option value="10AM-11AM">10AM - 11AM</option>
-                                        <option value="01PM-2PM">01PM - 02PM</option>
-                                        <option value="4PM-5PM">4PM - 5PM</option>
+                                    <option value="" disabled selected>Select Time</option>
+                                    <option value="10AM-11AM">10AM - 11AM</option>
+                                    <option value="01PM-2PM">01PM - 02PM</option>
+                                    <option value="4PM-5PM">4PM - 5PM</option>
                                 </select>
                             </td>
                             <td>
 
-                                    <input type="hidden" name="customerName" value="${dts.customerName}" />
-                                    <textarea class="form-control description-input" name="reason"
-                                        oninput="checkReason(this)" required>${dts.reason}</textarea>
-                                    <small class="description-reason"></small>
+                                <input type="hidden" name="customerName" value="${dts.customerName}" />
+                                <textarea class="form-control description-input" name="reason"
+                                    oninput="checkReason(this)" required>${dts.reason}</textarea>
+                                <small class="description-reason"></small>
                             </td>
                             <td><input type="submit" value="UPDATE">
-                            </form>
+                                </form>
                             </td>
                             <td>
                                 <a href="viewDetails?customerName=${dts.customerName}" class="view-button">VIEW
