@@ -162,7 +162,8 @@
         <i class="bi bi-list menu-icon" onclick="toggleMenu()"></i>
         <nav class="menu" id="menu">
             <a href="adminLogin">ADMIN</a>
-            <a href="#">USER</a>
+            <a href="userLogin">USER</a>
+            <a href="About.jsp">ABOUT</a>
         </nav>
     </header>
 

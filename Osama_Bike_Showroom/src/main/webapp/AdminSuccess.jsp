@@ -1,3 +1,5 @@
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,7 +65,7 @@
     }
 
     .header-btn i {
-      font-size: 18px;
+      font-size: 14px;
     }
 
     .header-btn::before,
@@ -96,8 +98,16 @@
     .header-btn:hover {
       color: #fff9e0;
     }
+    .email-text {
+      font-size: 12px;
+      color: #555;
+      transition: color 0.3s, text-decoration 0.3s;
+    }
 
-
+    .email-text:hover {
+      color: var(--bg-color);
+      text-decoration: underline;
+    }
 
     .main-content {
       display: flex;
@@ -217,9 +227,12 @@
 <body>
   <header>
     <img src="https://cdn.olaelectric.com/ev-discovery-platform/New-Homepage/ola_black_logo.svg" alt="OLA Electric" />
-    <a href="index.jsp" class="header-btn">
-        <i class="bi bi-house-fill"></i>Home
-      </a>
+
+        <a href="index.jsp" class="header-btn">
+        <span class="email-text">Admin:${sessionScope.email}</span>
+          <i class="bi bi-house-fill"></i> Home
+        </a>
+
   </header>
 
   <div class="main-content">

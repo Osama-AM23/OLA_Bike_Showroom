@@ -106,6 +106,18 @@
                         right: 0;
                     }
 
+                    .email-text {
+                        font-size: 12px;
+                        color: #000;
+                    	transition: color 0.3s, text-decoration 0.3s;
+                    	margin-left: 980px;
+                    }
+
+                    .email-text:hover {
+                    	color: var(--main-color);
+                    	text-decoration: underline;
+                    }
+
                     .container {
                         margin-top: 40px;
                         padding: 0 20px;
@@ -226,6 +238,7 @@
                 <header>
                     <img src="https://cdn.olaelectric.com/ev-discovery-platform/New-Homepage/ola_black_logo.svg"
                         alt="OLA Electric">
+                        <span class="email-text">Admin:${sessionScope.email}</span>
                     <i class="bi bi-list menu-icon" onclick="toggleMenu()"></i>
                 </header>
 
@@ -234,6 +247,7 @@
                     <a href="addBikeDetails"><i class="bi bi-plus-circle-fill"></i> Add Bike Details</a>
                     <a href="getDetails"><i class="bi bi-box-arrow-in-right"></i> Assign Bike to Showroom</a>
                     <a href="register"><i class="bi bi-person-plus-fill"></i> Registration</a>
+                    <a href="followUp"><i class="bi bi-person-lines-fill"></i>Follow Up</a>
                     <a href="AdminSuccess.jsp"><i class="bi bi-house-door-fill"></i> Home Page</a>
                 </nav>
 

@@ -103,6 +103,18 @@
                     right: 0;
                 }
 
+                .email-text {
+                    font-size: 12px;
+                    color: #000;
+                	transition: color 0.3s, text-decoration 0.3s;
+                	margin-left: 90px;
+                }
+
+                .email-text:hover {
+                	color: var(--main-color);
+                	text-decoration: underline;
+                }
+
                 .filter-container {
                     width: 80%;
                     display: flex;
@@ -375,6 +387,7 @@
             <header>
                 <img src="https://cdn.olaelectric.com/ev-discovery-platform/New-Homepage/ola_black_logo.svg"
                     alt="OLA Electric">
+                    <span class="email-text">Admin:${sessionScope.email}</span>
                 <i class="bi bi-list menu-icon" onclick="toggleMenu()"></i>
             </header>
 
@@ -471,7 +484,7 @@
                     const rows = table.querySelectorAll("tr");
 
                     rows.forEach(row => {
-                        const scheduleCell = row.cells[9];
+                        const scheduleCell = row.cells[7];
                         const scheduleValue = scheduleCell.textContent.trim();
 
                         if (selectedValue === "ALL" || scheduleValue === selectedValue) {

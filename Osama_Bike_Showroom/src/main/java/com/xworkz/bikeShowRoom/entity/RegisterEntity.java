@@ -25,6 +25,9 @@ import javax.persistence.*;
 
 @NamedQuery(name = "updateReasonByName",
         query = "Update RegisterEntity re Set re.reason= :reason, re.scheduleDate= :scheduleDate, re.scheduleTime= :scheduleTime Where re.customerName= :customerName")
+
+@NamedQuery(name = "getEmailAndPassword",
+        query = "Select re from RegisterEntity re where re.email = :email")
 public class RegisterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,4 +58,8 @@ public class RegisterEntity {
     private String scheduleTime;
 
     private String reason;
+
+    private String password;
+
+    private Integer loginCount = -1;
 }

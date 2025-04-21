@@ -32,4 +32,8 @@ public class RegisterDto {
     private String scheduleTime;
 
     private String reason;
+
+    private String password;
+
+    private Integer loginCount;
 }

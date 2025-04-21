@@ -104,6 +104,18 @@
                     right: 0;
                 }
 
+               .email-text {
+                 font-size: 12px;
+                 color: var(--table-hover);
+                 transition: color 0.3s, text-decoration 0.3s;
+                 margin-left: 1000px;
+               }
+
+                .email-text:hover {
+                  color: var(--bg-color);
+                  text-decoration: underline;
+                }
+
                 .back-button {
                     position: absolute;
                     top: 60px;
@@ -192,11 +204,12 @@
             <header>
                 <img src="https://cdn.olaelectric.com/ev-discovery-platform/New-Homepage/ola_black_logo.svg"
                     alt="OLA Electric">
+                    <span class="email-text">Admin:${sessionScope.email}</span>
                 <i class="bi bi-list menu-icon" onclick="toggleMenu()"></i>
             </header>
 
             <nav class="nav-menu" id="navMenu">
-                <span class="close-btn" onclick="toggleMenu()">&times;</span>
+                <span class="close-btn" onclick="toggleMenu()"></span>
                 <a href="addShowRoom"><i class="bi bi-plus-circle-fill"></i> Add Showroom</a>
                 <a href="addBikeDetails"><i class="bi bi-plus-circle-fill"></i> Add Bike Details</a>
                 <a href="getDetails"><i class="bi bi-box-arrow-in-right"></i> Assign Bike to Showroom</a>

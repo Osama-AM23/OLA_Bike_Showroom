@@ -5,17 +5,42 @@ import com.xworkz.bikeShowRoom.dto.ShowRoomInfoDto;
 import com.xworkz.bikeShowRoom.entity.AddShowRoomEntity;
 import com.xworkz.bikeShowRoom.entity.RegisterEntity;
 import com.xworkz.bikeShowRoom.repository.RegisterRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.util.*;
 
 @Service
+@Slf4j
 public class RegisterServiceImpl implements RegisterService {
 
     @Autowired
     RegisterRepository userRegRepo;
+
+    private String generatePassword;
+
+    public String autoGeneratePassword() {
+
+        String upperCase = "ABCDEFGHIJKLMNOPQUSTUVWXYZ";
+        String lowerCase = "abcdefghijklmnopqrstuvwxyz";
+        String numbers = "1234567890";
+        String specialChar = "!@#$&*?-+~";
+
+        String generatePassword = upperCase + lowerCase + numbers + specialChar;
+
+        Random random = new Random();
+        StringBuilder autoPassword = new StringBuilder();
+
+        for (int i = 0; i <= 5; i++) {
+            autoPassword.append(generatePassword.charAt(random.nextInt(generatePassword.length())));
+        }
+        return autoPassword.toString();
+    }
 
     @Override
     public List<ShowRoomInfoDto> getAllShowroom() {
@@ -77,6 +102,13 @@ public class RegisterServiceImpl implements RegisterService {
 
             if (registerDto.getEmail() != null && registerDto.getEmail().contains("@gmail.com") && registerDto.getEmail().matches("^[a-z0-9.]+@gmail\\.com$")) {
                 registerEntity.setEmail(registerDto.getEmail());
+                generatePassword = autoGeneratePassword();
+                registerEntity.setPassword(generatePassword);
+
+                boolean sendMail = sendEmail(registerDto.getEmail(), generatePassword);
+                if (sendMail) {
+                    log.info("Password is Send to The User");
+                }
             } else {
                 validation = false;
                 model.addAttribute("emailError", "Invalid Email! Give Proper Email");
@@ -102,6 +134,47 @@ public class RegisterServiceImpl implements RegisterService {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean sendEmail(String email, String password) {
+
+        final String username = "osamavr691@gmail.com";
+        final String userPassword = "xasi vgvm salk ryyh";
+
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true");
+        prop.put("mail.smtp.starttls.required", "true");
+
+        Session session = Session.getInstance(prop,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, userPassword);
+                    }
+                });
+
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(email)
+            );
+            message.setSubject("Secure Password of Ola-Showroom");
+            message.setText(" Your Password:  " + generatePassword);
+            Transport.send(message);
+
+            log.info("Password Send Successfully to User");
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+        return true;
     }
 
     @Override

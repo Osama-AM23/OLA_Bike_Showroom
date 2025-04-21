@@ -236,7 +236,6 @@
             </nav>
             <div class="container">
 
-                <!-- Admin Login Form (OTP SEND) -->
                 <form id="adminLoginForm" action="adminLogin" method="post">
                     <h3>SHOWROOM ADMIN</h3>
                     <div class="input-container">
@@ -249,7 +248,6 @@
                     </div>
                 </form>
 
-                <!-- OTP Verification Form -->
                 <form action="verifyOtp" method="post" id="otpForm">
                     <input type="hidden" name="email" value="${email}" />
                     <div class="input-container">
@@ -266,7 +264,6 @@
                     <input type="submit" class="login-btn" id="submitBtn" value="Login">
                 </form>
 
-                <!-- Resend OTP -->
                 <form action="resendOtp" id="resendOtpForm" method="post">
                     <input type="hidden" name="email" value="${email}" />
                     <input type="submit" class="re-send-btn" id="resendOtpBtn" value="Resend OTP">

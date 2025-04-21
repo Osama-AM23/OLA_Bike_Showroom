@@ -108,6 +108,19 @@
                     right: 0;
                 }
 
+                .email-text {
+                    font-size: 12px;
+                    color: var(--table-hover);
+                	transition: color 0.3s, text-decoration 0.3s;
+                	margin-left: 1000px;
+                }
+
+                .email-text:hover {
+                	color: var(--bg-color);
+                	text-decoration: underline;
+                }
+
+
                 .container {
                     width: 90%;
                     max-width: 880px;
@@ -217,7 +230,7 @@
                 }
 
 
-                #scheduledDate,
+                #scheduleDate,
                 #scheduleTime {
                     padding: 10px 10px;
                     width: 100%;
@@ -231,7 +244,7 @@
                 }
 
                 /* Focus state for both fields */
-                #scheduledDate:focus,
+                #scheduleDate:focus,
                 #scheduleTime:focus {
                     border-color: #2e4a56;
                     box-shadow: 0 0 6px rgba(92, 137, 157, 0.4);
@@ -259,6 +272,7 @@
             <header>
                 <img src="https://cdn.olaelectric.com/ev-discovery-platform/New-Homepage/ola_black_logo.svg"
                     alt="OLA Electric">
+                    <span class="email-text">Admin:${sessionScope.email}</span>
                 <i class="bi bi-list menu-icon" onclick="toggleMenu()"></i>
             </header>
             <nav class="nav-menu" id="navMenu">
@@ -354,7 +368,7 @@
                        <div class="inline-fields">
                            <!-- Date Field -->
                            <div>
-                               <input type="date" id="scheduledDate" name="scheduledDate" placeholder="Select Date" required />
+                               <input type="date" id="scheduleDate" name="scheduleDate" placeholder="Select Date" required />
                            </div>
 
                            <!-- Time Field -->
@@ -387,7 +401,7 @@
                 document.addEventListener('DOMContentLoaded', function () {
                     const scheduleDays = document.getElementById('scheduleDays');
                     const scheduleDetails = document.getElementById('scheduleDetails');
-                    const scheduledDate = document.getElementById('scheduledDate');
+                    const scheduledDate = document.getElementById('scheduleDate');
 
                     scheduleDays.addEventListener('change', function () {
                         const selectedValue = this.value;

@@ -14,6 +14,8 @@ public interface RegisterService {
 
     boolean validateAndSaveUser(RegisterDto userRegisterDto, Model model);
 
+    boolean sendEmail(String email, String password);
+
     long getCountOfName(String name);
 
     long getCountOfContact(String contactNo);

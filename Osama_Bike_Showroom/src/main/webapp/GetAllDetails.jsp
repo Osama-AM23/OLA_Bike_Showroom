@@ -61,7 +61,7 @@
         }
 
         header img {
-            height: 40px;
+            height: 30px;
             width: auto;
             transition: transform 0.3s ease-in-out;
         }
@@ -124,6 +124,18 @@
                 .show-menu {
                     right: 0;
                 }
+
+        .email-text {
+            font-size: 12px;
+            color: var(--table-hover);
+        	transition: color 0.3s, text-decoration 0.3s;
+        	margin-left: 970px;
+        }
+
+        .email-text:hover {
+        	color: var(--bg-color);
+        	text-decoration: underline;
+        }
 
         h2 {
             margin-bottom: 20px;
@@ -211,6 +223,7 @@
 
     <header>
         <img src="https://cdn.olaelectric.com/ev-discovery-platform/New-Homepage/ola_black_logo.svg" alt="OLA Electric">
+        <span class="email-text">Admin:${sessionScope.email}</span>
         <i class="bi bi-list menu-icon" onclick="toggleMenu()"></i>
     </header>
 

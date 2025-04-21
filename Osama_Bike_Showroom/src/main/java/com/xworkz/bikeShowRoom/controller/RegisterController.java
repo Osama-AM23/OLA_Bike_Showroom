@@ -38,7 +38,7 @@ public class RegisterController {
     public String onUserRegister(RegisterDto userRegisterDto, Model model) {
         boolean saved = userRegisterService.validateAndSaveUser(userRegisterDto, model);
         if (saved) {
-            return "RegisterSuccess";
+            return "AdminSuccess";
         }
         List<RegisterScheduleConstants> schedule = new ArrayList<>(Arrays.asList(RegisterScheduleConstants.values()));
         model.addAttribute("schedule", schedule);

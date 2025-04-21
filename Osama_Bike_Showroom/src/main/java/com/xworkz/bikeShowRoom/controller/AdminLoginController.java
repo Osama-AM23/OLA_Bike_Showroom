@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,11 +56,10 @@ public class AdminLoginController {
 
 
     @PostMapping("/verifyOtp")
-    public String verifyOtp(@RequestParam String email, @RequestParam String otp, Model model) {
+    public String verifyOtp(@RequestParam String email, @RequestParam String otp, Model model, HttpSession session) {
         String storedOtp = otpStorage.get(email);
         Long storedTimestamp = otpTimestamps.get(email);
 
-        // If OTP doesn't exist, it means it's already expired or not generated
         if (storedOtp == null || storedTimestamp == null) {
             model.addAttribute("email", email);
             model.addAttribute("error", "OTP Cannot be Empty!");
@@ -68,7 +68,6 @@ public class AdminLoginController {
 
         long currentTime = System.currentTimeMillis();
 
-        // Check if OTP is expired (valid for only 2 minutes = 120000 milliseconds)
         if (currentTime - storedTimestamp > 120000) {
             otpStorage.remove(email);
             otpTimestamps.remove(email);
@@ -77,13 +76,13 @@ public class AdminLoginController {
             return "AdminLogin";
         }
 
-        // If OTP is correct, remove it and allow login
         if (storedOtp.equals(otp)) {
             otpStorage.remove(email);
             otpTimestamps.remove(email);
+            session.setAttribute("email", email);
             return "AdminSuccess";
         } else {
-            // If the OTP is wrong but within 2 minutes, allow retry
+
             model.addAttribute("email", email);
             model.addAttribute("error", "Incorrect OTP! Try again.");
             return "AdminLogin";
