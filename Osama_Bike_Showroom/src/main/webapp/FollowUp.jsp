@@ -107,7 +107,7 @@
                     font-size: 12px;
                     color: #000;
                 	transition: color 0.3s, text-decoration 0.3s;
-                	margin-left: 90px;
+                	margin-left: 980px;
                 }
 
                 .email-text:hover {

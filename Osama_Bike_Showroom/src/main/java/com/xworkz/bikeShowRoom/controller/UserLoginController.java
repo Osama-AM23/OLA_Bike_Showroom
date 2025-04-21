@@ -30,10 +30,10 @@ public class UserLoginController {
 
         if (registerEntity == null) {
             model.addAttribute("error", "Invalid Email or Password");
-            return null;
+            return "UserLogin";
         }
 
-        if (registerEntity.getLoginCount() == 0) {
+        if (registerEntity.getLoginCount() == -1) {
             model.addAttribute("email", email);
             return "SetUserPassword";
         }
@@ -44,4 +44,14 @@ public class UserLoginController {
 
         return "UserLogin";
     }
+
+    @PostMapping("/setUserPassword")
+    public String setPassword(@RequestParam String email, @RequestParam String password, @RequestParam String confirmPassword) {
+
+        if (userLoginService.setPasswordUpdate(email, password, confirmPassword)) {
+            return "UserLogin";
+        }
+        return "SetUserPassword";
+    }
+
 }

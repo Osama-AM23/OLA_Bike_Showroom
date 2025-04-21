@@ -3,6 +3,7 @@ package com.xworkz.bikeShowRoom.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -28,6 +29,12 @@ import javax.persistence.*;
 
 @NamedQuery(name = "getEmailAndPassword",
         query = "Select re from RegisterEntity re where re.email = :email")
+
+@NamedQuery(name = "getDataForUpdate",
+        query = "Select re From RegisterEntity re where re.email = :email")
+
+@NamedQuery(name = "updateNewPassword",
+        query = "Update RegisterEntity re set re.password = :password , re.loginCount= 0 where re.email = :email")
 public class RegisterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,4 +69,6 @@ public class RegisterEntity {
     private String password;
 
     private Integer loginCount = -1;
+
+    private LocalDateTime lockTime;
 }

@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ page isELIgnored="false" %>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 
 <head>
@@ -216,6 +217,36 @@
             height: auto;
             display: block;
         }
+
+        p[style*="color:red"] {
+            font-size: 13px;
+            margin-bottom: 10px;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .error-message {
+            background-color: #ffe5e5;
+            border-left: 4px solid red;
+            color: #b30000;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
     </style>
 </head>
 
@@ -236,6 +267,7 @@
             <div class="error-message">
                 <p>${errorMessage}</p>
             </div>
+                </c:if>
             <div class="input-container">
                 <input type="text" id="email" name="email" placeholder="Enter Your Email">
             </div>

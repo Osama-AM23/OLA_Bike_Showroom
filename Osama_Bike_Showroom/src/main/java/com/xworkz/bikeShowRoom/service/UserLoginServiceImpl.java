@@ -8,6 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.time.LocalDateTime;
+
 @Service
 public class UserLoginServiceImpl implements UserLoginService {
 
@@ -27,19 +29,52 @@ public class UserLoginServiceImpl implements UserLoginService {
             return null;
         }
 
+        if (registerEntity.getLockTime() != null && lockTiming(registerEntity.getLockTime())) {
+            registerEntity.setLockTime(null);
+            userLoginRepo.updateLoginCount(registerEntity);
+        }
+
         if (registerEntity.getLoginCount() == -1) {
             return registerEntity;
         } else if (registerEntity.getLoginCount() > 3) {
             model.addAttribute("errorMessage", "Your Account Is Locked");
+            registerEntity.setLockTime(LocalDateTime.now());
+            userLoginRepo.setLockTime(email, registerEntity);
             return null;
         } else if (encodedPassword.matches(password, registerEntity.getPassword())) {
             registerEntity.setLoginCount(0);
+            userLoginRepo.updateLoginCount(registerEntity);
+            userLoginRepo.setLockTime(email, registerEntity);
             return registerEntity;
         } else {
             int attempt = registerEntity.getLoginCount() + 1;
             registerEntity.setLoginCount(attempt);
+            registerEntity.setLockTime(LocalDateTime.now());
+            userLoginRepo.updateLoginCount(registerEntity);
+            userLoginRepo.setLockTime(email, registerEntity);
             return null;
         }
 
+    }
+
+    @Override
+    public boolean lockTiming(LocalDateTime lockTime) {
+        return lockTime.plusMinutes(2).isBefore(LocalDateTime.now());
+    }
+
+    @Override
+    public boolean setPasswordUpdate(String email, String password, String confirmPassword) {
+
+        if (password.equals(confirmPassword)) {
+            RegisterEntity registerEntity = userLoginRepo.getDataForUpdate(email);
+
+            if (registerEntity != null) {
+                registerEntity.setPassword(encodedPassword.encode(confirmPassword));
+                registerEntity.setLoginCount(0);
+                return userLoginRepo.updateNewPassword(registerEntity);
+            }
+            return false;
+        }
+        return false;
     }
 }
