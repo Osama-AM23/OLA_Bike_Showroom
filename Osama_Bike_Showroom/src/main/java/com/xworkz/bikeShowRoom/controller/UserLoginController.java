@@ -33,6 +33,11 @@ public class UserLoginController {
             return "UserLogin";
         }
 
+        if (registerEntity.getLoginCount() == 0) {
+            model.addAttribute("email", email);
+            return "UserDashBoard";
+        }
+
         if (registerEntity.getLoginCount() == -1) {
             model.addAttribute("email", email);
             return "SetUserPassword";

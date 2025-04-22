@@ -31,12 +31,13 @@ public class UserLoginServiceImpl implements UserLoginService {
 
         if (registerEntity.getLockTime() != null && lockTiming(registerEntity.getLockTime())) {
             registerEntity.setLockTime(null);
-            userLoginRepo.updateLoginCount(registerEntity);
+            registerEntity.setLoginCount(0);
+            userLoginRepo.setLockTime(email, registerEntity);
         }
 
         if (registerEntity.getLoginCount() == -1) {
             return registerEntity;
-        } else if (registerEntity.getLoginCount() > 3) {
+        } else if (registerEntity.getLoginCount() >= 3) {
             model.addAttribute("errorMessage", "Your Account Is Locked");
             registerEntity.setLockTime(LocalDateTime.now());
             userLoginRepo.setLockTime(email, registerEntity);

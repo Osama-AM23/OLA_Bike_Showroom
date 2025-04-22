@@ -54,7 +54,7 @@ public class UserLoginRepositoryImpl implements UserLoginRepository {
         EntityTransaction eTrans = eManag.getTransaction();
         try {
             eTrans.begin();
-            eManag.persist(registerEntity);
+            eManag.merge(registerEntity);
             eTrans.commit();
             return true;
         } catch (Exception e) {
