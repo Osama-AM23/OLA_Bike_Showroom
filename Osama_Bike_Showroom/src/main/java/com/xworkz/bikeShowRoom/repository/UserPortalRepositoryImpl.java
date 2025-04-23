@@ -10,7 +10,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 @Repository
-public class UserLoginRepositoryImpl implements UserLoginRepository {
+public class UserPortalRepositoryImpl implements UserPortalRepository {
 
     @Autowired
     private EntityManagerFactory emf;
@@ -104,6 +104,37 @@ public class UserLoginRepositoryImpl implements UserLoginRepository {
 
             eTrans.commit();
 
+            return updateRow > 0;
+        } catch (Exception e) {
+            if (eTrans.isActive()) {
+                eTrans.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            eManag.close();
+        }
+    }
+
+    @Override
+    public boolean updateUserProfile(RegisterEntity registerEntity) {
+
+        EntityManager eManag = emf.createEntityManager();
+        EntityTransaction eTrans = eManag.getTransaction();
+
+        try {
+            eTrans.begin();
+            Query query = eManag.createNamedQuery("updateUserProfile");
+            query.setParameter("customerName", registerEntity.getCustomerName());
+            query.setParameter("age", registerEntity.getAge());
+            query.setParameter("contactNo", registerEntity.getContactNo());
+            query.setParameter("address", registerEntity.getAddress());
+            query.setParameter("drivingLicense", registerEntity.getDrivingLicense());
+            query.setParameter("userImg", registerEntity.getUserImg());
+            query.setParameter("email", registerEntity.getEmail());
+
+            int updateRow = query.executeUpdate();
+            eTrans.commit();
             return updateRow > 0;
         } catch (Exception e) {
             if (eTrans.isActive()) {

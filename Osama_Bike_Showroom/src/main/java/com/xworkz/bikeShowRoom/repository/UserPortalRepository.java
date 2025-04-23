@@ -2,7 +2,7 @@ package com.xworkz.bikeShowRoom.repository;
 
 import com.xworkz.bikeShowRoom.entity.RegisterEntity;
 
-public interface UserLoginRepository {
+public interface UserPortalRepository {
 
     RegisterEntity userLogin(String email);
 
@@ -13,4 +13,6 @@ public interface UserLoginRepository {
     RegisterEntity getDataForUpdate(String email);
 
     boolean updateNewPassword(RegisterEntity registerEntity);
+
+    boolean updateUserProfile(RegisterEntity registerEntity);
 }

@@ -1,6 +1,7 @@
 package com.xworkz.bikeShowRoom.repository;
 
 import com.xworkz.bikeShowRoom.dto.AddShowRoomDto;
+import com.xworkz.bikeShowRoom.entity.AddBikeDetailsEntity;
 import com.xworkz.bikeShowRoom.entity.AddShowRoomEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -76,6 +77,19 @@ public class AssignBikesRepositoryImpl implements AssignBikesRepository {
 
             showroom.setAssignedBikes(updatedBikes);
             eManag.merge(showroom);
+
+            for (String bikeName : availableBikes) {
+                List<AddBikeDetailsEntity> bikes = eManag.createNamedQuery("findBikeByName", AddBikeDetailsEntity.class)
+                        .setParameter("bikeName", bikeName)
+                        .getResultList();
+
+                for (AddBikeDetailsEntity bike : bikes) {
+                    if (bike.getAddress() == null || bike.getAddress().isEmpty()) {
+                        bike.setAddress(address);
+                        eManag.merge(bike);
+                    }
+                }
+            }
 
             eTrans.commit();
             return true;

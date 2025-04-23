@@ -2,7 +2,8 @@ package com.xworkz.bikeShowRoom.service;
 
 import com.xworkz.bikeShowRoom.dto.RegisterDto;
 import com.xworkz.bikeShowRoom.entity.RegisterEntity;
-import com.xworkz.bikeShowRoom.repository.UserLoginRepository;
+import com.xworkz.bikeShowRoom.repository.UserPortalRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,10 @@ import org.springframework.ui.Model;
 import java.time.LocalDateTime;
 
 @Service
-public class UserLoginServiceImpl implements UserLoginService {
+public class UserPortalServiceImpl implements UserPortalService {
 
     @Autowired
-    UserLoginRepository userLoginRepo;
+    UserPortalRepository userLoginRepo;
 
     private BCryptPasswordEncoder encodedPassword = new BCryptPasswordEncoder();
 
@@ -77,5 +78,25 @@ public class UserLoginServiceImpl implements UserLoginService {
             return false;
         }
         return false;
+    }
+
+    @Override
+    public RegisterDto getDataForUpdate(String email) {
+
+        RegisterEntity registerEntity = userLoginRepo.getDataForUpdate(email);
+
+        if (registerEntity != null) {
+            RegisterDto registerDto = new RegisterDto();
+            BeanUtils.copyProperties(registerEntity, registerDto);
+            return registerDto;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean updateUserProfile(RegisterDto registerDto) {
+        RegisterEntity registerEntity = new RegisterEntity();
+        BeanUtils.copyProperties(registerDto, registerEntity);
+        return userLoginRepo.updateUserProfile(registerEntity);
     }
 }

@@ -36,4 +36,6 @@ public class RegisterDto {
     private String password;
 
     private Integer loginCount;
+
+    private String userImg;
 }

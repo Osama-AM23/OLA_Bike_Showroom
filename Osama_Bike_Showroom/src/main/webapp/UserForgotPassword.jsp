@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Set_password</title>
+    <title>Forgot_password</title>
     <link rel="icon" href="https://cdn.olaelectric.com/ev-discovery-platform/New-Homepage/ola_black_logo.svg"
         type="image/png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -217,8 +217,9 @@
     </header>
 
     <div class="container">
-        <form action="setUserPassword" method="post">
-            <h2>SET NEW PASSWORD</h2>
+        <form action="forgotPassword" method="post">
+            <h2>RESET PASSWORD</h2>
+            <h4>Reset Your Password If you Forgot Them</h4>
             <div class="input-group">
                 <i class="bi bi-envelope"></i>
                 <input type="text" name="email" id="email" placeholder="Enter Your Email">
@@ -226,7 +227,7 @@
             <div class="input-group">
                 <i class="bi bi-key"></i>
                 <input type="password" name="password" id="password" onchange="onPassword()"
-                    placeholder="Set Your Password">
+                    placeholder="Set New Password">
                 <i class="bi bi-eye-slash eye-icon" id="togglePassword"
                     style="cursor: pointer; font-size: 17px; color: var(--main-color);"></i>
             </div>
@@ -237,7 +238,7 @@
                     placeholder="Enter Your Confirm Password">
             </div>
             <span id="confirmPasswordError" class="error-msg"></span>
-            <input type="submit" id="submitBtn" value="SET PASSWORD">
+            <input type="submit" id="submitBtn" value="RESET">
         </form>
     </div>
 

@@ -17,6 +17,8 @@ public class AddBikeDetailsDto {
 
     private String price;
 
+    private String address;
+
     private String imgPaths;
 
 }

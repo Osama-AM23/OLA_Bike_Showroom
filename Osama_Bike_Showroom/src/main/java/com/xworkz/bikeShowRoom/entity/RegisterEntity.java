@@ -35,6 +35,9 @@ import java.time.LocalDateTime;
 
 @NamedQuery(name = "updateNewPassword",
         query = "Update RegisterEntity re set re.password = :password , re.loginCount= 0 where re.email = :email")
+
+@NamedQuery(name = "updateUserProfile",
+        query = "Update RegisterEntity re Set re.customerName = :customerName, re.age = :age, re.contactNo = :contactNo, re.address = :address, re.drivingLicense = :drivingLicense, re.userImg = :userImg Where re.email = :email")
 public class RegisterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,4 +74,6 @@ public class RegisterEntity {
     private Integer loginCount = -1;
 
     private LocalDateTime lockTime;
+
+    private String userImg;
 }

@@ -17,6 +17,9 @@ import java.util.List;
 @NamedQuery(name = "getCountOfBikeName",
         query = "Select Count (ade) From AddBikeDetailsEntity ade Where ade.bikeName = :bikeName")
 
+@NamedQuery(name = "findBikeByName",
+        query = "Select ade FROM AddBikeDetailsEntity ade Where ade.bikeName = :bikeName")
+
 @NamedQuery(name = "getAllDetails",
         query = "Select ade From AddBikeDetailsEntity ade")
 public class AddBikeDetailsEntity {
@@ -34,6 +37,8 @@ public class AddBikeDetailsEntity {
     private String motorPower;
 
     private String price;
+
+    private String address;
 
     private String imgPaths;
 
