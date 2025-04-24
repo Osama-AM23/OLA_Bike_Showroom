@@ -17,4 +17,6 @@ public interface UserPortalService {
     RegisterDto getDataForUpdate(String email);
 
     boolean updateUserProfile(RegisterDto registerDto);
+
+    boolean updateUserSchedule(RegisterDto registerDto);
 }

@@ -99,4 +99,11 @@ public class UserPortalServiceImpl implements UserPortalService {
         BeanUtils.copyProperties(registerDto, registerEntity);
         return userLoginRepo.updateUserProfile(registerEntity);
     }
+
+    @Override
+    public boolean updateUserSchedule(RegisterDto registerDto) {
+        RegisterEntity registerEntity = new RegisterEntity();
+        BeanUtils.copyProperties(registerDto, registerEntity);
+        return userLoginRepo.updateUserSchedule(registerEntity);
+    }
 }

@@ -1,8 +1,16 @@
 package com.xworkz.bikeShowRoom.controller;
 
+import com.xworkz.bikeShowRoom.constants.RegisterScheduleConstants;
+import com.xworkz.bikeShowRoom.constants.RegisterScheduleDayConstants;
+import com.xworkz.bikeShowRoom.dto.AddBikeDetailsDto;
 import com.xworkz.bikeShowRoom.dto.RegisterDto;
+import com.xworkz.bikeShowRoom.dto.ShowRoomInfoDto;
 import com.xworkz.bikeShowRoom.entity.RegisterEntity;
+import com.xworkz.bikeShowRoom.service.BikesInformationService;
+import com.xworkz.bikeShowRoom.service.RegisterService;
 import com.xworkz.bikeShowRoom.service.UserPortalService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,17 +20,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/")
 public class UserPortalController {
 
     @Autowired
-    UserPortalService userLoginService;
+    UserPortalService userPortalService;
+
+    @Autowired
+    BikesInformationService bikesInfoService;
+
+    @Autowired
+    RegisterService registerService;
 
     @GetMapping("/userLogin")
     public String getUserPage() {
@@ -38,7 +58,7 @@ public class UserPortalController {
     @PostMapping("/userLogin")
     public String onUserLogin(@RequestParam String email, @RequestParam String password, Model model) {
         RegisterDto registerDto = new RegisterDto();
-        RegisterEntity registerEntity = userLoginService.userlogin(email, password, model);
+        RegisterEntity registerEntity = userPortalService.userlogin(email, password, model);
 
         if (registerEntity == null) {
             model.addAttribute("error", "Invalid Email or Password");
@@ -66,7 +86,7 @@ public class UserPortalController {
     @PostMapping("/setUserPassword")
     public String setPassword(@RequestParam String email, @RequestParam String password, @RequestParam String confirmPassword) {
 
-        if (userLoginService.setPasswordUpdate(email, password, confirmPassword)) {
+        if (userPortalService.setPasswordUpdate(email, password, confirmPassword)) {
             return "UserLogin";
         }
         return "SetUserPassword";
@@ -82,7 +102,7 @@ public class UserPortalController {
     @PostMapping("/forgotPassword")
     public String forgotPassword(@RequestParam String email, @RequestParam String password, @RequestParam String confirmPassword) {
 
-        if (userLoginService.setPasswordUpdate(email, password, confirmPassword)) {
+        if (userPortalService.setPasswordUpdate(email, password, confirmPassword)) {
             return "UserLogin";
         }
         return "UserForgotPassword";
@@ -90,7 +110,7 @@ public class UserPortalController {
 
     @GetMapping("/profileUpdate")
     public String UserProfile(@RequestParam String email, Model model) {
-        RegisterDto registerDto = userLoginService.getDataForUpdate(email);
+        RegisterDto registerDto = userPortalService.getDataForUpdate(email);
         model.addAttribute("getData", registerDto);
         return "UserProfileUpdate";
     }
@@ -105,7 +125,7 @@ public class UserPortalController {
         String fileName = multipartFile.getOriginalFilename().toString();
         registerDto.setUserImg(fileName);
 
-        boolean isUpdate = userLoginService.updateUserProfile(registerDto);
+        boolean isUpdate = userPortalService.updateUserProfile(registerDto);
 
         if (isUpdate) {
             model.addAttribute("email", registerDto.getEmail());
@@ -118,8 +138,49 @@ public class UserPortalController {
 
     @GetMapping("/schedule")
     public String getSchedule(@RequestParam String email, Model model) {
+
+        List<RegisterScheduleConstants> schedule = new ArrayList<>(Arrays.asList(RegisterScheduleConstants.values()));
+        model.addAttribute("schedule", schedule);
+
+        List<RegisterScheduleDayConstants> scheduleDay = new ArrayList<>(Arrays.asList(RegisterScheduleDayConstants.values()));
+        model.addAttribute("scheduleDays", scheduleDay);
+
+        List<ShowRoomInfoDto> showrooms = registerService.getAllShowroom();
+        model.addAttribute("showrooms", showrooms);
+
+        RegisterDto registerDto = userPortalService.getDataForUpdate(email);
+        model.addAttribute("sdul", registerDto);
         return "Schedule";
     }
 
+    @PostMapping("/scheduleUpdate")
+    public String onScheduleUpdate(RegisterDto registerDto, Model model) {
+
+        boolean isUpdate = userPortalService.updateUserSchedule(registerDto);
+
+        if (isUpdate) {
+            log.info(":: Schedule Updated from Controller ::");
+            model.addAttribute("email", registerDto.getEmail());
+            return "UserDashBoard";
+        }
+        return "Schedule";
+    }
+
+    @GetMapping("/exploreBikes")
+    public String exploreBikes(Model model) {
+        List<AddBikeDetailsDto> lists = bikesInfoService.getAllDetails();
+        model.addAttribute("info", lists);
+        return "ExploreBikes";
+    }
+
+    @GetMapping("/bikesDisplay")
+    public void imageDisplay(@RequestParam String imgPaths, HttpServletResponse servletResponse) throws IOException {
+        servletResponse.setContentType("image/jpg");
+        File file = new File("M:\\showroom\\bikes\\" + imgPaths);
+        InputStream input = new BufferedInputStream(new FileInputStream(file));
+        ServletOutputStream outputStream = servletResponse.getOutputStream();
+        IOUtils.copy(input, outputStream);
+        servletResponse.flushBuffer();
+    }
 
 }

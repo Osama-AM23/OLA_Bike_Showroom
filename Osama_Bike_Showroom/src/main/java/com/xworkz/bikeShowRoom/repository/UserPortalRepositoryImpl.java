@@ -146,4 +146,36 @@ public class UserPortalRepositoryImpl implements UserPortalRepository {
             eManag.close();
         }
     }
+
+    @Override
+    public boolean updateUserSchedule(RegisterEntity registerEntity) {
+        EntityManager eManag = emf.createEntityManager();
+        EntityTransaction eTrans = eManag.getTransaction();
+
+        try {
+            eTrans.begin();
+            Query query = eManag.createNamedQuery("updateUserSchedule");
+            query.setParameter("schedule", registerEntity.getSchedule());
+            query.setParameter("showroomNames", registerEntity.getShowroomNames());
+            query.setParameter("bikeNames", registerEntity.getBikeNames());
+            query.setParameter("scheduleDays", registerEntity.getScheduleDays());
+            query.setParameter("scheduleDate", registerEntity.getScheduleDate());
+            query.setParameter("scheduleTime", registerEntity.getScheduleTime());
+            query.setParameter("email", registerEntity.getEmail());
+
+            int updateRow = query.executeUpdate();
+            eTrans.commit();
+
+            return updateRow > 0;
+        } catch (Exception e) {
+            if (eTrans.isActive()) {
+                eTrans.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        } finally {
+            eManag.close();
+        }
+
+    }
 }

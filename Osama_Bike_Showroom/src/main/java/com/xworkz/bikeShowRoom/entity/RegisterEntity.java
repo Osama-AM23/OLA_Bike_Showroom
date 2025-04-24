@@ -38,6 +38,9 @@ import java.time.LocalDateTime;
 
 @NamedQuery(name = "updateUserProfile",
         query = "Update RegisterEntity re Set re.customerName = :customerName, re.age = :age, re.contactNo = :contactNo, re.address = :address, re.drivingLicense = :drivingLicense, re.userImg = :userImg Where re.email = :email")
+
+@NamedQuery(name = "updateUserSchedule",
+        query = "Update RegisterEntity re Set re.schedule = :schedule, re.showroomNames = :showroomNames, re.bikeNames = :bikeNames, re.scheduleDays = :scheduleDays, re.scheduleDate = :scheduleDate, re.scheduleTime = :scheduleTime Where re.email = :email")
 public class RegisterEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

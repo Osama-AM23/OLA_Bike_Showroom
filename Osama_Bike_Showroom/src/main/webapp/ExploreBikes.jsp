@@ -1,15 +1,19 @@
 <%@ page isELIgnored="false" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <title>Explore_bikes</title>
     <link rel="icon" href="https://cdn.olaelectric.com/ev-discovery-platform/New-Homepage/ola_black_logo.svg"
         type="image/png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
 
     <style>
         :root {
@@ -146,82 +150,82 @@
         }
 
         .container {
-            max-width: 720px;
-            margin: 25px auto;
-            padding: 2px;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            animation: fadeIn 1s ease;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        form h3 {
+        .bikes-title {
             text-align: center;
             margin-bottom: 30px;
+            font-size: 2rem;
             color: var(--text-color);
         }
 
-        .input-group {
-            position: relative;
-            margin-bottom: 25px;
+        .bike-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
         }
 
-        .input-group i {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
+        .bike-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: calc(25% - 20px);
+            /* 4 per row with 20px gap */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .bike-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .bike-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .bike-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
             color: var(--main-color);
-            font-size: 1.1rem;
         }
 
-        .input-group input {
-            width: 100%;
-            padding: 10px 10px 10px 35px;
-            border: none;
-            border-bottom: 2px solid #ccc;
-            background: transparent;
-            font-size: 1rem;
-            transition: border-color 0.3s;
+        .bike-card p {
+            font-size: 0.95rem;
+            margin: 5px 0;
+            color: #333;
         }
 
-        .input-group input:focus {
-            outline: none;
-            border-bottom-color: var(--main-color);
-        }
-
-        .update-btn {
-            width: 100%;
-            padding: 10px;
-            background-color: var(--main-color);
-            color: white;
-            font-size: 1rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 25px;
-            margin-top: 10px;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-        .update-btn:hover {
-            background-color: var(--text-color);
-            color: var(--bg-color);
-            transform: scale(1.01);
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                margin: 20px;
-                padding: 20px;
+        /* Responsive breakpoints */
+        @media (max-width: 1024px) {
+            .bike-card {
+                width: calc(33.333% - 20px);
+                /* 3 per row */
             }
+        }
 
-            .input-group input {
-                font-size: 0.95rem;
+        @media (max-width: 768px) {
+            .bike-card {
+                width: calc(50% - 20px);
+                /* 2 per row */
             }
+        }
 
-            .update-btn {
-                font-size: 1rem;
+        @media (max-width: 480px) {
+            .bike-card {
+                width: 100%;
+                /* 1 per row */
             }
         }
     </style>
@@ -235,54 +239,32 @@
     </header>
     <nav class="nav-menu" id="navMenu">
         <span class="close-btn" onclick="toggleMenu()">&times;</span>
+        <a href="profileUpdate"><i class="bi bi-person-fill-up"></i> Update Profile</a>
         <a href="exploreBikes">
-           <span class="material-symbols-outlined">two_wheeler</span> Explore Bikes
+            <span class="material-symbols-outlined"></span> Explore Bikes
         </a>
+
         <a href="schedule"><i class="bi bi-hourglass"></i> Schedule</a>
         <a href="userDashBoard"><i class="bi bi-house-fill"></i> Home</a>
     </nav>
 
     <div class="container">
-        <form action="updateProfile" method="post" enctype="multipart/form-data">
-            <H3>UPDATE YOUR PROFILE</H3>
-            <div class="input-group">
-                <i class="bi bi-image"></i>
-                <input type="file" name="file" id="imgProperty" accept=".jpg, .jpeg, .png">
-            </div>
-
-            <div class="input-group">
-                <i class="bi bi-person"></i>
-                <input type="text" id="customerName" name="customerName" placeholder="Enter Your Name" value="${getData.customerName}">
-            </div>
-
-            <div class="input-group">
-                <i class="bi bi-calendar"></i>
-                <input type="text" id="age" name="age" placeholder="Enter Your Age" value="${getData.age}">
-            </div>
-
-            <div class="input-group">
-                <i class="bi bi-envelope"></i>
-                <input type="text" id="email" name="email" placeholder="Enter Your Email" value="${getData.email}" readonly>
-            </div>
-
-            <div class="input-group">
-                <i class="bi bi-telephone"></i>
-                <input type="text" id="contactNo" name="contactNo" placeholder="Enter your Contact Number" value="${getData.contactNo}">
-            </div>
-
-            <div class="input-group">
-                <i class="bi bi-geo-alt"></i>
-                <input type="text" id="address" name="address" placeholder="Enter Your Address" value="${getData.address}">
-            </div>
-
-            <div class="input-group">
-                <i class="bi bi-credit-card"></i>
-                <input type="text" id="drivingLicense" name="drivingLicense" placeholder="Enter Your Driving License No" value="${getData.drivingLicense}" readonly>
-            </div>
-
-            <input type="submit" class="update-btn" id="submitBtn" value="UPDATE PROFILE">
-
-        </form>
+        <h2 class="bikes-title">Bikes Information</h2>
+        <div class="bike-cards">
+            <c:forEach var="bike" items="${info}">
+                <div class="bike-card">
+                    <c:forEach var="img" items="${fn:split(bike.imgPaths, ',')}">
+                        <img src="bikesDisplay?imgPaths=${img}" alt="Bike Image" />
+                    </c:forEach>
+                    <h4>${bike.bikeName}</h4>
+                    <p><strong>Year:</strong> ${bike.year}</p>
+                    <p><strong>Range:</strong> ${bike.bikeRange}</p>
+                    <p><strong>Motor Power:</strong> ${bike.motorPower}</p>
+                    <p><strong>Price:</strong> ₹${bike.price}</p>
+                    <p><strong>Available Showroom :</strong>${bike.address}</p>
+                </div>
+            </c:forEach>
+        </div>
     </div>
 
     <script>

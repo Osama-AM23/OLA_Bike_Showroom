@@ -15,4 +15,6 @@ public interface UserPortalRepository {
     boolean updateNewPassword(RegisterEntity registerEntity);
 
     boolean updateUserProfile(RegisterEntity registerEntity);
+
+    boolean updateUserSchedule(RegisterEntity registerEntity);
 }
