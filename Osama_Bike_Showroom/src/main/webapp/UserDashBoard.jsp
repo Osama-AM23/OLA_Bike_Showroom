@@ -222,10 +222,10 @@
   <nav class="nav-menu" id="navMenu">
     <span class="close-btn" onclick="toggleMenu()">&times;</span>
     <a href="profileUpdate?email=${email}"><i class="bi bi-person-fill-up"></i>  Update Profile</a>
-    <a href="exploreBikes">
+    <a href="${pageContext.request.contextPath}/exploreBikes?email=${email}">
         <span class="material-symbols-outlined"></span> Explore Bikes
     </a>
-<a href="schedule?email=${email}"><i class="bi bi-hourglass"></i>  Schedule</a>
+    <a href="schedule?email=${email}"><i class="bi bi-hourglass"></i>  Schedule</a>
   </nav>
 
   <main>

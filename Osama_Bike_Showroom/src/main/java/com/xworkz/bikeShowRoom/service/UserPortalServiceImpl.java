@@ -1,6 +1,8 @@
 package com.xworkz.bikeShowRoom.service;
 
+import com.xworkz.bikeShowRoom.dto.AddBikeDetailsDto;
 import com.xworkz.bikeShowRoom.dto.RegisterDto;
+import com.xworkz.bikeShowRoom.entity.AddBikeDetailsEntity;
 import com.xworkz.bikeShowRoom.entity.RegisterEntity;
 import com.xworkz.bikeShowRoom.repository.UserPortalRepository;
 import org.springframework.beans.BeanUtils;
@@ -10,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UserPortalServiceImpl implements UserPortalService {
@@ -105,5 +110,20 @@ public class UserPortalServiceImpl implements UserPortalService {
         RegisterEntity registerEntity = new RegisterEntity();
         BeanUtils.copyProperties(registerDto, registerEntity);
         return userLoginRepo.updateUserSchedule(registerEntity);
+    }
+
+    @Override
+    public List<AddBikeDetailsDto> getBikesByAddress(String address) {
+
+        List<AddBikeDetailsDto> dtos = new ArrayList<>();
+        List<AddBikeDetailsEntity> entities = userLoginRepo.getBikesByAddress(address);
+
+        for (AddBikeDetailsEntity entity : entities) {
+            AddBikeDetailsDto bikesDto = new AddBikeDetailsDto();
+            BeanUtils.copyProperties(entity, bikesDto);
+            dtos.add(bikesDto);
+        }
+
+        return dtos;
     }
 }

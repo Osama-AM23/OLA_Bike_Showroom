@@ -316,18 +316,23 @@
 
 <body>
     <header>
-        <img src="https://cdn.olaelectric.com/ev-discovery-platform/New-Homepage/ola_black_logo.svg"
-            alt="OLA Electric" />
-        <i class="bi bi-list menu-icon" onclick="toggleMenu()"></i>
-    </header>
-    <nav class="nav-menu" id="navMenu">
+        <img src="https://cdn.olaelectric.com/ev-discovery-platform/New-Homepage/ola_black_logo.svg" alt="OLA Electric"
+          height="30" />
+        <div class="header-btn">
+          <span class="email-text"><i class="bi bi-person-circle"></i> ${email}</span>
+          <i class="bi bi-list menu-icon" onclick="toggleMenu()"></i>
+        </div>
+      </header>
+
+      <nav class="nav-menu" id="navMenu">
         <span class="close-btn" onclick="toggleMenu()">&times;</span>
-        <a href="profileUpdate"><i class="bi bi-person-fill-up"></i> Update Profile</a>
-        <a href="exploreBikes">
-            <span class="material-symbols-outlined">two_wheeler</span> Explore Bikes
+        <a href="profileUpdate?email=${email}"><i class="bi bi-person-fill-up"></i>  Update Profile</a>
+        <a href="exploreBikes?email=${email}">
+            <span class="material-symbols-outlined"></span> Explore Bikes
         </a>
-        <a href="userDashBoard"><i class="bi bi-house-fill"></i> Home</a>
-    </nav>
+        <a href="schedule?email=${email}"><i class="bi bi-hourglass"></i>  Schedule</a>
+        <a href="userDashBoard?email=${email}"><i class="bi bi-house-fill"></i> Home</a>
+      </nav>
 
     <div class="container">
         <form action="scheduleUpdate" method="post">

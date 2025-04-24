@@ -1,6 +1,9 @@
 package com.xworkz.bikeShowRoom.repository;
 
+import com.xworkz.bikeShowRoom.entity.AddBikeDetailsEntity;
 import com.xworkz.bikeShowRoom.entity.RegisterEntity;
+
+import java.util.List;
 
 public interface UserPortalRepository {
 
@@ -17,4 +20,6 @@ public interface UserPortalRepository {
     boolean updateUserProfile(RegisterEntity registerEntity);
 
     boolean updateUserSchedule(RegisterEntity registerEntity);
+
+    List<AddBikeDetailsEntity> getBikesByAddress(String address);
 }

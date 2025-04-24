@@ -3,10 +3,11 @@ package com.xworkz.bikeShowRoom.controller;
 import com.xworkz.bikeShowRoom.constants.RegisterScheduleConstants;
 import com.xworkz.bikeShowRoom.constants.RegisterScheduleDayConstants;
 import com.xworkz.bikeShowRoom.dto.AddBikeDetailsDto;
+import com.xworkz.bikeShowRoom.dto.AddShowRoomDto;
 import com.xworkz.bikeShowRoom.dto.RegisterDto;
 import com.xworkz.bikeShowRoom.dto.ShowRoomInfoDto;
 import com.xworkz.bikeShowRoom.entity.RegisterEntity;
-import com.xworkz.bikeShowRoom.service.BikesInformationService;
+import com.xworkz.bikeShowRoom.service.AddShowRoomService;
 import com.xworkz.bikeShowRoom.service.RegisterService;
 import com.xworkz.bikeShowRoom.service.UserPortalService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,10 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
@@ -26,9 +24,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -39,7 +35,7 @@ public class UserPortalController {
     UserPortalService userPortalService;
 
     @Autowired
-    BikesInformationService bikesInfoService;
+    AddShowRoomService addShowRoomService;
 
     @Autowired
     RegisterService registerService;
@@ -50,8 +46,8 @@ public class UserPortalController {
     }
 
     @GetMapping("/userDashBoard")
-    public String getDashBoard(Model model, RegisterDto registerDto) {
-        model.addAttribute("email", registerDto.getEmail());
+    public String getDashBoard(@RequestParam String email, Model model) {
+        model.addAttribute("email", email);
         return "UserDashBoard";
     }
 
@@ -112,6 +108,7 @@ public class UserPortalController {
     public String UserProfile(@RequestParam String email, Model model) {
         RegisterDto registerDto = userPortalService.getDataForUpdate(email);
         model.addAttribute("getData", registerDto);
+        model.addAttribute("email", registerDto.getEmail());
         return "UserProfileUpdate";
     }
 
@@ -150,6 +147,8 @@ public class UserPortalController {
 
         RegisterDto registerDto = userPortalService.getDataForUpdate(email);
         model.addAttribute("sdul", registerDto);
+
+        model.addAttribute("email", registerDto.getEmail());
         return "Schedule";
     }
 
@@ -167,10 +166,37 @@ public class UserPortalController {
     }
 
     @GetMapping("/exploreBikes")
-    public String exploreBikes(Model model) {
-        List<AddBikeDetailsDto> lists = bikesInfoService.getAllDetails();
+    public String exploreBikes(@RequestParam String email, Model model, AddShowRoomDto addShowRoomDto, RegisterDto registerDto) {
+        List<AddShowRoomDto> lists = addShowRoomService.getAllShowroom();
+        model.addAttribute("img", addShowRoomDto.getImgPath());
         model.addAttribute("info", lists);
+
+        model.addAttribute("email", email);
         return "ExploreBikes";
+    }
+
+    @GetMapping("/showroomDisplay")
+    public void getImage(@RequestParam String imgPath, HttpServletResponse servletResponse) throws IOException {
+        servletResponse.setContentType("image/jpg");
+        File file = new File("M:\\showroom\\showroomImages" + imgPath);
+        if (file.exists()) {
+            try (InputStream input = new BufferedInputStream(new FileInputStream(file));
+                 ServletOutputStream outputStream = servletResponse.getOutputStream()) {
+                IOUtils.copy(input, outputStream);
+                servletResponse.flushBuffer();
+            }
+        } else {
+            servletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            servletResponse.getWriter().write("Image not found");
+        }
+    }
+
+    @GetMapping("/showroomBikes")
+    public String getShowroomBikes(@RequestParam("address") String address,@RequestParam("email") String email, Model model) {
+        List<AddBikeDetailsDto> bikesByAddress = userPortalService.getBikesByAddress(address);
+        model.addAttribute("bikes", bikesByAddress);
+        model.addAttribute("email", email);
+        return "ShowroomBikes";
     }
 
     @GetMapping("/bikesDisplay")

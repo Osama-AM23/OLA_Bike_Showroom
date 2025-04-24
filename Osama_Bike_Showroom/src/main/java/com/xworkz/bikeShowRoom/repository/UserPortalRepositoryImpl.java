@@ -1,5 +1,6 @@
 package com.xworkz.bikeShowRoom.repository;
 
+import com.xworkz.bikeShowRoom.entity.AddBikeDetailsEntity;
 import com.xworkz.bikeShowRoom.entity.RegisterEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -8,6 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import java.util.Collections;
+import java.util.List;
 
 @Repository
 public class UserPortalRepositoryImpl implements UserPortalRepository {
@@ -173,6 +176,28 @@ public class UserPortalRepositoryImpl implements UserPortalRepository {
             }
             e.printStackTrace();
             return false;
+        } finally {
+            eManag.close();
+        }
+
+    }
+
+    @Override
+    public List<AddBikeDetailsEntity> getBikesByAddress(String address) {
+        EntityManager eManag = emf.createEntityManager();
+        EntityTransaction eTrans = eManag.getTransaction();
+
+        try {
+            eTrans.begin();
+            Query query = eManag.createNamedQuery("getBikesByAddress");
+            query.setParameter("address", address);
+            return query.getResultList();
+        } catch (Exception e) {
+            if (eTrans.isActive()) {
+                eTrans.rollback();
+            }
+            e.printStackTrace();
+            return null;
         } finally {
             eManag.close();
         }

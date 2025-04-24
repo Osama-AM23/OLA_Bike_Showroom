@@ -1,10 +1,12 @@
 package com.xworkz.bikeShowRoom.service;
 
+import com.xworkz.bikeShowRoom.dto.AddBikeDetailsDto;
 import com.xworkz.bikeShowRoom.dto.RegisterDto;
 import com.xworkz.bikeShowRoom.entity.RegisterEntity;
 import org.springframework.ui.Model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface UserPortalService {
 
@@ -19,4 +21,6 @@ public interface UserPortalService {
     boolean updateUserProfile(RegisterDto registerDto);
 
     boolean updateUserSchedule(RegisterDto registerDto);
+
+    List<AddBikeDetailsDto> getBikesByAddress(String address);
 }

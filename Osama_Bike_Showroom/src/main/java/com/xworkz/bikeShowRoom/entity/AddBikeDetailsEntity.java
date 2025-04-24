@@ -22,6 +22,9 @@ import java.util.List;
 
 @NamedQuery(name = "getAllDetails",
         query = "Select ade From AddBikeDetailsEntity ade")
+
+@NamedQuery(name = "getBikesByAddress",
+        query = "Select se From AddBikeDetailsEntity se Where se.address = :address")
 public class AddBikeDetailsEntity {
 
     @Id
