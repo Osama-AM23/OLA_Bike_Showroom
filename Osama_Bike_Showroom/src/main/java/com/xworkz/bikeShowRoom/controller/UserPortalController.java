@@ -40,6 +40,11 @@ public class UserPortalController {
     @Autowired
     RegisterService registerService;
 
+    @GetMapping("/getHome")
+    public String getHomePage(){
+        return "index";
+    }
+
     @GetMapping("/userLogin")
     public String getUserPage() {
         return "UserLogin";
@@ -136,9 +141,6 @@ public class UserPortalController {
     @GetMapping("/schedule")
     public String getSchedule(@RequestParam String email, Model model) {
 
-        List<RegisterScheduleConstants> schedule = new ArrayList<>(Arrays.asList(RegisterScheduleConstants.values()));
-        model.addAttribute("schedule", schedule);
-
         List<RegisterScheduleDayConstants> scheduleDay = new ArrayList<>(Arrays.asList(RegisterScheduleDayConstants.values()));
         model.addAttribute("scheduleDays", scheduleDay);
 
@@ -192,7 +194,7 @@ public class UserPortalController {
     }
 
     @GetMapping("/showroomBikes")
-    public String getShowroomBikes(@RequestParam("address") String address,@RequestParam("email") String email, Model model) {
+    public String getShowroomBikes(@RequestParam("address") String address, @RequestParam("email") String email, Model model) {
         List<AddBikeDetailsDto> bikesByAddress = userPortalService.getBikesByAddress(address);
         model.addAttribute("bikes", bikesByAddress);
         model.addAttribute("email", email);

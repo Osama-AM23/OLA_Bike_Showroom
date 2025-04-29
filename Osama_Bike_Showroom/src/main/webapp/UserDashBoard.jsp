@@ -226,6 +226,7 @@
         <span class="material-symbols-outlined"></span> Explore Bikes
     </a>
     <a href="schedule?email=${email}"><i class="bi bi-hourglass"></i>  Schedule</a>
+    <a href="getHome"><i class="bi bi-box-arrow-left"></i>  Log Out</a>
   </nav>
 
   <main>

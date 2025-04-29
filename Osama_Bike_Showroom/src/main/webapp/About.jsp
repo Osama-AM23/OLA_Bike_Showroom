@@ -17,6 +17,7 @@
             --input-line: #ccc;
             --input-focus: #fff9e0;
             --button-hover: #fff9e0;
+            --glow-color: #9dc0d4;
         }
 
         * {
@@ -26,9 +27,7 @@
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             animation: fadeInUp 1s ease-in-out;
@@ -41,18 +40,18 @@
             padding: 10px 20px;
             background-color: var(--main-color);
             color: #fff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         header img {
-            height: 20px;
+            height: 30px;
+            animation: fadeIn 1.2s ease-in-out;
         }
 
         .header-btn {
-            position: relative;
             font-size: 16px;
             font-weight: 500;
             color: white;
@@ -60,62 +59,72 @@
             background: none;
             border: none;
             cursor: pointer;
-            padding: 8px 12px;
-            transition: color 0.3s ease;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             gap: 8px;
+            position: relative;
+            transition: color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .header-btn:hover {
+            color: var(--button-hover);
+            text-shadow: 0 0 5px var(--glow-color);
         }
 
         .header-btn i {
             font-size: 18px;
         }
 
-        .header-btn::before,
-        .header-btn::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            height: 2px;
+        .about-card,
+        .project-card,
+        .user-card,
+        .tech-card {
+            max-width: 960px;
+            margin: 40px auto;
             background-color: white;
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            padding: 30px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1.2s ease-in-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .header-btn::before {
-            top: 0;
-            transform-origin: left;
-        }
-
-        .header-btn::after {
-            bottom: 0;
-            transform-origin: right;
-        }
-
-        .header-btn:hover::before,
-        .header-btn:hover::after {
-            transform: scaleX(1);
-        }
-
-        .header-btn:hover {
-            color: #fff9e0;
+        .about-card:hover,
+        .project-card:hover,
+        .user-card:hover,
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
         h2 {
             text-align: center;
-            margin-top: 30px;
             font-size: 2rem;
-            animation: fadeInUp 1.4s ease-in-out;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        h2::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--main-color);
+            margin: 10px auto 0;
+            border-radius: 3px;
         }
 
         p {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 0 20px;
-            line-height: 1.6;
             font-size: 1rem;
+            line-height: 1.6;
+            margin: 10px 0;
+            padding: 0 5px;
             animation: fadeInUp 1.6s ease-in-out;
+        }
+
+        p strong {
+            color: var(--main-color);
         }
 
         @keyframes fadeInUp {
@@ -129,7 +138,62 @@
                 transform: translateY(0);
             }
         }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px;
+            }
+
+            .header-btn {
+                margin-top: 10px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .about-card,
+            .project-card,
+            .user-card,
+            .tech-card {
+                margin: 20px 15px;
+                padding: 20px;
+            }
+
+            p {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-btn {
+                font-size: 14px;
+                padding: 8px 10px;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            p {
+                font-size: 0.9rem;
+            }
+        }
     </style>
+
 </head>
 
 <body>
@@ -141,28 +205,48 @@
         </a>
     </header>
 
+    <div class="about-card">
+        <h2>ABOUT THE PROJECT</h2>
+        <p>Admin Portal: Admin logs in with email, verifies OTP sent to email, and then manages bikes, showrooms, and
+            user
+            records.</p>
+        <p>User Portal: Users register/login, with password encryption during registration and decryption during login.
+            They
+            can update their profile, schedule a test drive or bike booking, and explore available bikes and showroom
+            details.</p>
+        <p>Validations are applied using JS, AJAX, and Spring validation.</p>
+        <p>Proper logging is done using Logger for critical activities like login, schedule, etc.</p>
+    </div>
 
-    <h2>ABOUT THE PROJECT</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum animi eveniet saepe minima quaerat facilis quod
-        iusto amet quae totam.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum animi eveniet saepe minima quaerat facilis quod
-        iusto amet quae totam.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum animi eveniet saepe minima quaerat facilis quod
-        iusto amet quae totam.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum animi eveniet saepe minima quaerat facilis quod
-        iusto amet quae totam.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum animi eveniet saepe minima quaerat facilis quod
-        iusto amet quae totam.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum animi eveniet saepe minima quaerat facilis quod
-        iusto amet quae totam.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum animi eveniet saepe minima quaerat facilis quod
-        iusto amet quae totam.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum animi eveniet saepe minima quaerat facilis quod
-        iusto amet quae totam.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum animi eveniet saepe minima quaerat facilis quod
-        iusto amet quae totam.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum animi eveniet saepe minima quaerat facilis quod
-        iusto amet quae totam.</p>
+    <div class="project-card">
+        <h2>PROJECT MODULES</h2>
+        <p><strong>Admin Portal</strong></p>
+        <p>Admin Login → Email + OTP Verification</p>
+        <p>Admin Dashboard (after OTP Verification)</p>
+        <p>Add / Update / Bikes</p>
+        <p>Add / Update / Showroom</p>
+        <p>View Registered Users</p>
+        <p>View Scheduled Test Drives / Bookings</p>
+    </div>
+
+    <div class="user-card">
+        <p><strong>User Portal</strong></p>
+        <p>User Registration (Password encryption)</p>
+        <p>User Login (Password decryption check)</p>
+        <p>Update Profile</p>
+        <p>Explore Bikes</p>
+        <p>View Showroom Details</p>
+        <p>Schedule Test Drive </p>
+    </div>
+
+    <div class="tech-card">
+        <h2>TECHONOLOGIES USED</h2>
+
+        <P><strong>BACK-END :</strong> Java, Spring-MVC, Lombok, Service Layer, DAO Layer, Loggers.</P>
+        <p><strong>FRONT-END :</strong>JSP, CSS, JS Validation, AJAX</p>
+        <p><strong>DATABASE :</strong>MySQL</p>
+        <p><strong>IDE :</strong>IntelliJ IDEA</p>
+    </div>
 
 </body>
 
